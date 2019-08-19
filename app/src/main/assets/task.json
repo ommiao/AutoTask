@@ -1,0 +1,45 @@
+{
+  "orders": [
+    {
+      "findRule": "device",
+      "action": "home",
+      "uiInfo": {}
+    },
+    {
+      "findRule": "description",
+      "action": "click",
+      "delay": 500,
+      "uiInfo": {
+        "description": "Files"
+      }
+    },
+    {
+      "findRule": "description",
+      "action": "click",
+      "uiInfo": {
+        "description": "More options"
+      }
+    },
+    {
+      "findRule": "text",
+      "action": "click",
+      "uiInfo": {
+        "text": "Show internal storage"
+      }
+    },
+    {
+      "findRule": "description",
+      "action": "click",
+      "uiInfo": {
+        "description": "Show roots"
+      }
+    },
+    {
+      "findRule": "text",
+      "action": "click",
+      "uiInfo": {
+        "text": "Android SDK built for x86"
+      }
+    }
+  ]
+}

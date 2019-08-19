@@ -1,0 +1,38 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+//打包jar包为dex文件
+task makeDexFile(type:Exec){
+    workingDir 'build/libs/'
+    //on windows:
+    commandLine 'cmd', '/c', dxpath +' --dex --output=classes.dex server.jar'
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+task unzip(type: Copy){
+    delete('build/libs/dex')
+    from zipTree('build/libs/server.jar')
+    into { 'build/libs/dex' }
+    exclude 'com/**'
+}
+task copyDex(type: Copy){
+    from 'build/libs/classes.dex'
+    into 'build/libs/dex'
+}
+
+task dexJar(type:Zip){
+    destinationDir = file('build/output')
+    archiveName = 'autotaskserver.jar'
+    from('build/libs/dex'){
+        into '/'
+    }
+}
+makeDexFile.dependsOn(jar)
+unzip.dependsOn(makeDexFile)
+copyDex.dependsOn(unzip)
+dexJar.dependsOn(copyDex)
