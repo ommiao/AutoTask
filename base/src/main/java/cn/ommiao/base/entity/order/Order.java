@@ -12,4 +12,6 @@ public class Order extends JavaBean {
 
     public UiInfo uiInfo;
 
+    public String notFoundEvent;
+
 }
