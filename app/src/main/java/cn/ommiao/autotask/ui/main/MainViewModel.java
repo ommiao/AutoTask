@@ -1,13 +1,19 @@
 package cn.ommiao.autotask.ui.main;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.palette.graphics.Palette;
+
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
 import cn.ommiao.base.entity.order.Task;
+import cn.ommiao.base.util.StringUtil;
 
 public class MainViewModel extends ViewModel {
 
@@ -59,6 +65,25 @@ public class MainViewModel extends ViewModel {
         tasks.add(taskC);
         tasks.add(taskB);
         tasks.add(taskA);
+        for (Task task : tasks) {
+            if(StringUtil.isEmptyOrSpace(task.coverPath)){
+                continue;
+            }
+            Bitmap bitmap = BitmapFactory.decodeFile(task.coverPath);
+            if(bitmap != null){
+                Palette palette = Palette.from(bitmap).generate();
+                Palette.Swatch lightVibrantSwatch = palette.getVibrantSwatch();
+                if(lightVibrantSwatch != null){
+                    //谷歌推荐的：图片的整体的颜色rgb的混合值---主色调
+                    task.taskCoverColor = lightVibrantSwatch.getRgb();
+                    //谷歌推荐：图片中间的文字颜色
+                    task.taskNameColor = lightVibrantSwatch.getBodyTextColor();
+                    //谷歌推荐：作为标题的颜色（有一定的和图片的对比度的颜色值）
+                    task.taskDescriptionColor = lightVibrantSwatch.getTitleTextColor();
+
+                }
+            }
+        }
     }
 
 }

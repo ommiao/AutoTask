@@ -2,6 +2,7 @@ package cn.ommiao.autotask.ui.adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.base.entity.order.Task;
+import cn.ommiao.base.util.StringUtil;
 
 public class TaskListAdapter extends BaseQuickAdapter<Task, BaseViewHolder> {
 
@@ -27,29 +29,26 @@ public class TaskListAdapter extends BaseQuickAdapter<Task, BaseViewHolder> {
     @Override
     protected void convert(@NonNull BaseViewHolder baseViewHolder, Task task) {
         ImageView iv = baseViewHolder.getView(R.id.iv);
-        Glide.with(iv).load(task.coverPath).into(iv);
-        Bitmap bitmap = BitmapFactory.decodeFile(task.coverPath);
-        if(bitmap != null){
-            ImageView ivMask = baseViewHolder.getView(R.id.iv_mask);
-            Palette.from(bitmap).generate(palette -> {
-                if(palette != null){
-                    Palette.Swatch lightVibrantSwatch = palette.getVibrantSwatch();
-                    if(lightVibrantSwatch != null){
-                        //谷歌推荐的：图片的整体的颜色rgb的混合值---主色调
-                        int rgb = lightVibrantSwatch.getRgb();
-                        ivMask.setColorFilter(rgb);
-                        //谷歌推荐：图片中间的文字颜色
-                        int bodyTextColor = lightVibrantSwatch.getBodyTextColor();
-                        //谷歌推荐：作为标题的颜色（有一定的和图片的对比度的颜色值）
-                        int titleTextColor = lightVibrantSwatch.getTitleTextColor();
-                        baseViewHolder.setTextColor(R.id.tv_task_name, bodyTextColor);
-                        baseViewHolder.setTextColor(R.id.tv_task_desc, titleTextColor);
-                    }
-                }
-
-            });
+        ImageView ivMask = baseViewHolder.getView(R.id.iv_mask);
+        if(StringUtil.isEmptyOrSpace(task.coverPath)){
+            Glide.with(iv).load(R.drawable.yhy).into(iv);
+            ivMask.setColorFilter(Color.parseColor("#17244E"));
+            baseViewHolder.setTextColor(R.id.tv_task_name, Color.WHITE);
+            baseViewHolder.setTextColor(R.id.tv_task_desc, Color.WHITE);
+        } else {
+            Glide.with(iv).load(task.coverPath).into(iv);
+            if(!(task.taskCoverColor == 0 && task.taskNameColor == 0 && task.taskDescriptionColor == 0)){
+                ivMask.setColorFilter(task.taskCoverColor);
+                baseViewHolder.setTextColor(R.id.tv_task_name, task.taskNameColor);
+                baseViewHolder.setTextColor(R.id.tv_task_desc, task.taskDescriptionColor);
+            } else {
+                ivMask.setColorFilter(Color.WHITE);
+                baseViewHolder.setTextColor(R.id.tv_task_name, Color.GRAY);
+                baseViewHolder.setTextColor(R.id.tv_task_desc, Color.GRAY);
+            }
         }
         baseViewHolder.setText(R.id.tv_task_name, task.taskName);
         baseViewHolder.setText(R.id.tv_task_desc, task.taskDescription);
+        baseViewHolder.addOnClickListener(R.id.fab_start, R.id.fab_delete);
     }
 }
