@@ -17,6 +17,8 @@ import cn.ommiao.base.util.StringUtil;
 
 public class MainViewModel extends ViewModel {
 
+    public static final String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/cn.ommiao.autotask/files/";
+
     private MutableLiveData<ArrayList<Task>> taskLiveData = new MutableLiveData<>();
 
     public MutableLiveData<ArrayList<Task>> getTasks(){
@@ -25,7 +27,6 @@ public class MainViewModel extends ViewModel {
     }
 
     private void loadTasks(){
-        String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/cn.ommiao.autotask/files/";
         ArrayList<Task> tasks = new ArrayList<>();
         Task taskA = new Task();
         taskA.taskId = "wsdfwerf";

@@ -3,6 +3,8 @@ package cn.ommiao.autotask.ui.adapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,6 +23,8 @@ import cn.ommiao.base.entity.order.Task;
 import cn.ommiao.base.util.StringUtil;
 
 public class TaskListAdapter extends BaseQuickAdapter<Task, BaseViewHolder> {
+
+    private static final float BLUR_RADIUS = 20f;
 
     public TaskListAdapter(int layoutResId, @Nullable List<Task> data) {
         super(layoutResId, data);
@@ -49,6 +53,5 @@ public class TaskListAdapter extends BaseQuickAdapter<Task, BaseViewHolder> {
         }
         baseViewHolder.setText(R.id.tv_task_name, task.taskName);
         baseViewHolder.setText(R.id.tv_task_desc, task.taskDescription);
-        baseViewHolder.addOnClickListener(R.id.fab_start, R.id.fab_delete);
     }
 }
