@@ -17,7 +17,7 @@ public abstract class BaseActivity<B extends ViewDataBinding> extends AppCompatA
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, getLayoutId());
         init();
-        initViews();
+        initViews(savedInstanceState);
         initData();
     }
 
@@ -25,7 +25,7 @@ public abstract class BaseActivity<B extends ViewDataBinding> extends AppCompatA
 
     }
 
-    protected abstract void initViews();
+    protected abstract void initViews(Bundle savedInstanceState);
 
     protected void initData(){
 

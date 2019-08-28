@@ -25,6 +25,11 @@ public abstract class BaseFragment<B extends ViewDataBinding, M extends ViewMode
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
+        init();
+    }
+
+    protected void init() {
+
     }
 
     @Nullable

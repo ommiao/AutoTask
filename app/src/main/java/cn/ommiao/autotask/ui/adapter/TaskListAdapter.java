@@ -36,7 +36,7 @@ public class TaskListAdapter extends BaseQuickAdapter<Task, BaseViewHolder> {
         ImageView ivMask = baseViewHolder.getView(R.id.iv_mask);
         if(StringUtil.isEmptyOrSpace(task.coverPath)){
             Glide.with(iv).load(R.drawable.yhy).into(iv);
-            ivMask.setColorFilter(Color.parseColor("#17244E"));
+            ivMask.setColorFilter(R.color.defaultTaskMask);
             baseViewHolder.setTextColor(R.id.tv_task_name, Color.WHITE);
             baseViewHolder.setTextColor(R.id.tv_task_desc, Color.WHITE);
         } else {
@@ -53,5 +53,6 @@ public class TaskListAdapter extends BaseQuickAdapter<Task, BaseViewHolder> {
         }
         baseViewHolder.setText(R.id.tv_task_name, task.taskName);
         baseViewHolder.setText(R.id.tv_task_desc, task.taskDescription);
+        baseViewHolder.addOnClickListener(R.id.fl_start, R.id.fl_edit, R.id.fl_delete);
     }
 }

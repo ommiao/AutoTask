@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_gravity="center_horizontal|bottom"
-            app:fabCustomSize="40dp"
+            app:fabCustomSize="45dp"
             android:src="@drawable/ic_add"
             android:tint="@android:color/white"/>
 

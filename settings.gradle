@@ -1,1 +1,1 @@
-include ':app', ':server', ':base', ':blurview'
+include ':app', ':server', ':base'

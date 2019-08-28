@@ -9,7 +9,9 @@ import java.net.UnknownHostException;
 
 public class Client {
 
+    public static final String HEART_BEAT = "@heartbeat";
     public static final String OK = "@ok";
+    public static final String ALIVE = "@alive";
     public static final String RUN_TEST = "am instrument -w -r -e class cn.ommiao.autotaskexecutor.AutoTaskTest cn.ommiao.autotaskexecutor.test/androidx.test.runner.AndroidJUnitRunner";
 
     private DatagramSocket datagramSocket;
