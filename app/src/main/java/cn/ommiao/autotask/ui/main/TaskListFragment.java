@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.immersionbar.ImmersionBar;
+import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -140,8 +141,12 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
     public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
         switch (view.getId()){
             case R.id.fl_start:
-                FileUtil.writeTask(OrderUtil.readOrders(mContext));
-                client.send(Client.RUN_TEST);
+                if(isServerRun){
+                    FileUtil.writeTask(OrderUtil.readOrders(mContext));
+                    client.send(Client.RUN_TEST);
+                } else {
+                    Toast.makeText(mContext, "Server is not running.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.fl_edit:
                 break;

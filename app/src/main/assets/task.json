@@ -1,44 +1,80 @@
 {
   "orders": [
     {
-      "findRule": "device",
-      "action": "home",
-      "uiInfo": {}
+      "findRule": "DEVICE",
+      "action": "HOME",
+      "uiInfo": {
+      }
     },
     {
-      "findRule": "description",
-      "action": "click",
+      "findRule": "DEVICE",
+      "action": "FORCE_STOP",
+      "uiInfo": {
+        "targetPackageName": "com.coolapk.market"
+      }
+    },
+    {
+      "findRule": "TEXT",
+      "action": "CLICK",
       "delay": 500,
       "uiInfo": {
-        "description": "Files"
+        "text": "CoolApk"
       }
     },
     {
-      "findRule": "description",
-      "action": "click",
+      "findRule": "TEXT",
+      "action": "CLICK",
       "uiInfo": {
-        "description": "More options"
+        "text": "Me"
       }
     },
     {
-      "findRule": "text",
-      "action": "click",
+      "findRule": "TEXT",
+      "action": "CLICK",
       "uiInfo": {
-        "text": "Show internal storage"
+        "text": "更多"
       }
     },
     {
-      "findRule": "description",
-      "action": "click",
+      "findRule": "ID_SCROLL_CHILD_TEXT",
+      "action": "CLICK",
       "uiInfo": {
-        "description": "Show roots"
+        "id": "com.coolapk.market:id/recycler_view",
+        "child": {
+          "text": "设置"
+        }
       }
     },
     {
-      "findRule": "text",
-      "action": "click",
+      "findRule": "TEXT",
+      "action": "CLICK",
       "uiInfo": {
-        "text": "Android SDK built for x86"
+        "text": "实验室"
+      }
+    },
+    {
+      "findRule": "TEXT",
+      "action": "CLICK",
+      "uiInfo": {
+        "text": "7天免开屏广告特权"
+      }
+    },
+    {
+      "findRule": "DEVICE",
+      "action": "BACK",
+      "uiInfo": {
+      }
+    },
+    {
+      "findRule": "DEVICE",
+      "action": "BACK",
+      "uiInfo": {
+      }
+    },
+    {
+      "findRule": "DEVICE",
+      "action": "BACK",
+      "uiInfo": {
       }
     }
   ]

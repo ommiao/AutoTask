@@ -4,8 +4,10 @@ import cn.ommiao.base.entity.JavaBean;
 
 public class Order extends JavaBean {
 
-    public String findRule;
-    public String action;
+    public FindRule findRule;
+
+    public Action action;
+
     public int repeatTimes;
 
     public long delay;
@@ -13,5 +15,7 @@ public class Order extends JavaBean {
     public UiInfo uiInfo;
 
     public String notFoundEvent;
+
+    public Order alternate;
 
 }
