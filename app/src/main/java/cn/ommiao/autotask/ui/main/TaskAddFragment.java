@@ -81,4 +81,13 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
         animator.start();
     }
 
+    @Override
+    public boolean listenBackPressed() {
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        closeReveal(mBinding.getRoot());
+    }
 }

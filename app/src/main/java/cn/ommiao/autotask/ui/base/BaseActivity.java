@@ -8,9 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
-public abstract class BaseActivity<B extends ViewDataBinding> extends AppCompatActivity {
+import cn.ommiao.autotask.interfaces.OnFragmentChangedListener;
+
+public abstract class BaseActivity<B extends ViewDataBinding> extends AppCompatActivity implements OnFragmentChangedListener {
 
     protected B mBinding;
+    private BaseFragment focusedFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,4 +35,18 @@ public abstract class BaseActivity<B extends ViewDataBinding> extends AppCompatA
     }
 
     protected abstract  @LayoutRes int getLayoutId();
+
+    @Override
+    public void setFocusedFragment(BaseFragment focusedFragment) {
+        this.focusedFragment = focusedFragment;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(focusedFragment == null || !focusedFragment.listenBackPressed()){
+            super.onBackPressed();
+        } else {
+            focusedFragment.onBackPressed();
+        }
+    }
 }

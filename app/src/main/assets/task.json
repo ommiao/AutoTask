@@ -3,8 +3,7 @@
     {
       "findRule": "DEVICE",
       "action": "HOME",
-      "uiInfo": {
-      }
+      "uiInfo": {}
     },
     {
       "findRule": "DEVICE",

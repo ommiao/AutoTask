@@ -15,17 +15,27 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
+import cn.ommiao.autotask.interfaces.OnFragmentChangedListener;
+
 public abstract class BaseFragment<B extends ViewDataBinding, M extends ViewModel> extends Fragment {
 
     protected FragmentActivity mContext;
     protected B mBinding;
     protected M mViewModel;
+    private OnFragmentChangedListener backPressedListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
+        backPressedListener = (OnFragmentChangedListener) getActivity();
         init();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        backPressedListener.setFocusedFragment(this);
     }
 
     protected void init() {
@@ -56,4 +66,12 @@ public abstract class BaseFragment<B extends ViewDataBinding, M extends ViewMode
     protected abstract Class<M> classOfViewModel();
 
     protected abstract @LayoutRes int getLayoutId();
+
+    public boolean listenBackPressed(){
+        return false;
+    }
+
+    public void onBackPressed(){
+
+    }
 }
