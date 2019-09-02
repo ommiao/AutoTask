@@ -24,7 +24,7 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
 
     @Override
     protected void initViews() {
-        ImmersionBar.with(this).statusBarView(mBinding.vStatusBar).statusBarDarkFont(false).init();
+        ImmersionBar.with(this).statusBarView(mBinding.vStatusBar).statusBarDarkFont(true).init();
         mBinding.fabHidden.getViewTreeObserver().addOnPreDrawListener(this);
         mBinding.ivBack.setOnClickListener(view -> {
             closeReveal(mBinding.getRoot());
@@ -64,6 +64,12 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
         Animator animator = ViewAnimationUtils.createCircularReveal(animView, tvX, tvY, startRadius, endRadius);
         animator.setDuration(REVEAL_DURATION);
         animator.setInterpolator(new AccelerateInterpolator());
+        animator.addListener(new SimpleAnimatorListener(){
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                ImmersionBar.with(mContext).statusBarDarkFont(false).init();
+            }
+        });
         animator.start();
     }
 
@@ -81,6 +87,7 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
             }
 
         });
+        ImmersionBar.with(mContext).statusBarDarkFont(true).init();
         animator.start();
     }
 
