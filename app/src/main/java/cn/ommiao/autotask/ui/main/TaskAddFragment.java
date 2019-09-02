@@ -7,6 +7,8 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 
+import com.gyf.immersionbar.ImmersionBar;
+
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FragmentTaskAddBinding;
 import cn.ommiao.autotask.ui.base.BaseFragment;
@@ -22,8 +24,9 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
 
     @Override
     protected void initViews() {
+        ImmersionBar.with(this).statusBarView(mBinding.vStatusBar).statusBarDarkFont(false).init();
         mBinding.fabHidden.getViewTreeObserver().addOnPreDrawListener(this);
-        mBinding.ivTest.setOnClickListener(view -> {
+        mBinding.ivBack.setOnClickListener(view -> {
             closeReveal(mBinding.getRoot());
         });
     }

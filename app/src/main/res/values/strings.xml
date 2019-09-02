@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Auto Task</string>
+    <string name="title_add_task">添加新的任务</string>
 </resources>
