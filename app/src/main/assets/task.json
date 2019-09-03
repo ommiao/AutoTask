@@ -35,12 +35,12 @@
       }
     },
     {
-      "findRule": "ID_SCROLL_CHILD_TEXT",
+      "findRule": "TEXT_PARENT_ID_SCROLL",
       "action": "CLICK",
       "uiInfo": {
-        "id": "com.coolapk.market:id/recycler_view",
-        "child": {
-          "text": "设置"
+        "text": "设置",
+        "parent": {
+          "id": "com.coolapk.market:id/recycler_view"
         }
       }
     },
