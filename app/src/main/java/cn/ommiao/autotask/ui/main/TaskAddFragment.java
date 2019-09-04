@@ -20,7 +20,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.immersionbar.ImmersionBar;
+import com.orhanobut.logger.Logger;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 import com.zhihu.matisse.Matisse;
@@ -31,15 +33,18 @@ import java.util.ArrayList;
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FragmentTaskAddBinding;
 import cn.ommiao.autotask.databinding.HeaderOrderListBinding;
+import cn.ommiao.autotask.entity.SectionOfOrder;
 import cn.ommiao.autotask.other.Glide4Engine;
 import cn.ommiao.autotask.ui.adapter.OrderListAdapter;
 import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.listener.SimpleAnimatorListener;
 import cn.ommiao.base.entity.order.Action;
 import cn.ommiao.base.entity.order.FindRule;
+import cn.ommiao.base.entity.order.Group;
 import cn.ommiao.base.entity.order.Order;
+import cn.ommiao.base.entity.order.Task;
 
-public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainViewModel> implements ViewTreeObserver.OnPreDrawListener {
+public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainViewModel> implements ViewTreeObserver.OnPreDrawListener, BaseQuickAdapter.OnItemChildClickListener {
 
     private static final long REVEAL_DURATION = 500;
     private static final int REQUEST_CODE_CHOOSE = 666;
@@ -48,23 +53,26 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
     private int tvX;
     private int tvY;
 
-    private ArrayList<Order> orders = new ArrayList<>();
+    private ArrayList<SectionOfOrder> sectionOfOrders = new ArrayList<>();
     private OrderListAdapter adapter;
     private HeaderOrderListBinding headerBinding;
+
+    private Task task;
 
     @Override
     protected void initViews() {
         ImmersionBar.with(this).statusBarView(mBinding.vStatusBar).statusBarDarkFont(true).init();
-        mBinding.fabHidden.getViewTreeObserver().addOnPreDrawListener(this);
+        mBinding.fabAdd.getViewTreeObserver().addOnPreDrawListener(this);
         mBinding.ivBack.setOnClickListener(view -> {
             closeReveal(mBinding.getRoot());
         });
-        adapter = new OrderListAdapter(R.layout.item_order_list, orders);
+        adapter = new OrderListAdapter(R.layout.item_order_list, R.layout.header_order_section, sectionOfOrders);
         View header = LayoutInflater.from(mContext).inflate(R.layout.header_order_list, null);
         headerBinding = DataBindingUtil.bind(header);
         adapter.addHeaderView(header);
         View footer = LayoutInflater.from(mContext).inflate(R.layout.footer_order_list, null);
         adapter.addFooterView(footer);
+        adapter.setOnItemChildClickListener(this);
         mBinding.rvOrders.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.rvOrders.setAdapter(adapter);
         headerBinding.ivSelectAlbum.setOnClickListener(view -> {
@@ -86,6 +94,28 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
                 selectAlbum();
             }
         });
+        mBinding.fabAdd.setOnClickListener(view -> {
+            Group group = new Group();
+            group.groupName = "指令组" + (task.groups.size() + 1);
+            group.orders = new ArrayList<>();
+            group.repeatTimes = 1;
+            task.groups.add(group);
+            sectionOfOrders.add(new SectionOfOrder(true, group.groupName, group));
+            adapter.notifyItemInserted(computeIndexForGroup(group));
+        });
+    }
+
+    private int computeIndexForGroup(Group group){
+        int index = -1 + adapter.getHeaderLayoutCount();
+        for (int i = 0; i < task.groups.size(); i++) {
+            index += 1;
+            Group g = task.groups.get(i);
+            boolean equal = g == group;
+            if(!equal){
+                index = index + g.orders.size();
+            }
+        }
+        return index;
     }
 
     private void selectAlbum(){
@@ -110,21 +140,19 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
     @Override
     protected void initData() {
 
+        task = new Task();
+        task.groups = new ArrayList<>();
+
         Order order1 = new Order();
         order1.findRule = FindRule.ID;
         order1.action = Action.BACK;
-        orders.add(order1);
-
         Order order2= new Order();
         order2.findRule = FindRule.DESCRIPTION;
         order2.action = Action.HOME;
-        orders.add(order2);
-
         Order order3 = new Order();
         order3.findRule = FindRule.DEVICE;
         order3.action = Action.FORCE_STOP;
-        orders.add(order3);
-        adapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -139,8 +167,8 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
 
     @Override
     public boolean onPreDraw() {
-        mBinding.fabHidden.getViewTreeObserver().removeOnPreDrawListener(this);
-        startReveal(mBinding.fabHidden, mBinding.getRoot());
+        mBinding.fabAdd.getViewTreeObserver().removeOnPreDrawListener(this);
+        startReveal(mBinding.fabAdd, mBinding.getRoot());
         return true;
     }
 
@@ -195,5 +223,26 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
     @Override
     public void onBackPressed() {
         closeReveal(mBinding.getRoot());
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+        switch (view.getId()){
+            case R.id.iv_add_order:
+                Logger.d(i);
+                Group group = sectionOfOrders.get(i).groupOfOrder;
+                Order order = getNewOrder();
+                group.addOrder(order);
+                sectionOfOrders.add(i + group.orders.size(), new SectionOfOrder(order, group));
+                adapter.notifyItemInserted(i + group.orders.size() + 1);
+                break;
+        }
+    }
+
+    private Order getNewOrder(){
+        Order order = new Order();
+        order.findRule = FindRule.ID;
+        order.action = Action.CLICK;
+        return order;
     }
 }
