@@ -1,80 +1,60 @@
 {
-  "orders": [
+  "groups": [
     {
-      "findRule": "DEVICE",
-      "action": "HOME",
-      "uiInfo": {}
-    },
-    {
-      "findRule": "DEVICE",
-      "action": "FORCE_STOP",
-      "uiInfo": {
-        "targetPackageName": "com.coolapk.market"
-      }
-    },
-    {
-      "findRule": "TEXT",
-      "action": "CLICK",
-      "delay": 500,
-      "uiInfo": {
-        "text": "CoolApk"
-      }
-    },
-    {
-      "findRule": "TEXT",
-      "action": "CLICK",
-      "uiInfo": {
-        "text": "Me"
-      }
-    },
-    {
-      "findRule": "TEXT",
-      "action": "CLICK",
-      "uiInfo": {
-        "text": "更多"
-      }
-    },
-    {
-      "findRule": "TEXT_PARENT_ID_SCROLL",
-      "action": "CLICK",
-      "uiInfo": {
-        "text": "设置",
-        "parent": {
-          "id": "com.coolapk.market:id/recycler_view"
+      "repeatTimes": 1,
+      "orders": [
+        {
+          "findRule": "DEVICE",
+          "action": "HOME",
+          "delay": 1000,
+          "repeatTimes": 1,
+          "uiInfo": {}
+        },
+        {
+          "findRule": "TEXT",
+          "action": "CLICK",
+          "delay": 1000,
+          "repeatTimes": 1,
+          "uiInfo": {
+            "text": "支付宝"
+          }
+        },
+        {
+          "findRule": "ID",
+          "action": "CLICK",
+          "delay": 1000,
+          "repeatTimes": 1,
+          "uiInfo": {
+            "id": "com.alipay.android.phone.openplatform:id/more_app_icon"
+          }
+        },
+        {
+          "findRule": "TEXT",
+          "action": "CLICK",
+          "delay": 1000,
+          "repeatTimes": 1,
+          "uiInfo": {
+            "text": "蚂蚁森林"
+          }
+        },
+        {
+          "findRule": "TEXT_CONTAINS",
+          "action": "CLICK",
+          "delay": 800,
+          "repeatTimes": 0,
+          "timeout": 2000,
+          "uiInfo": {
+            "text": "收集能量"
+          }
+        },
+        {
+          "findRule": "DEVICE",
+          "action": "BACK",
+          "delay": 1000,
+          "repeatTimes": 3,
+          "uiInfo": {}
         }
-      }
-    },
-    {
-      "findRule": "TEXT",
-      "action": "CLICK",
-      "uiInfo": {
-        "text": "实验室"
-      }
-    },
-    {
-      "findRule": "TEXT",
-      "action": "CLICK",
-      "uiInfo": {
-        "text": "7天免开屏广告特权"
-      }
-    },
-    {
-      "findRule": "DEVICE",
-      "action": "BACK",
-      "uiInfo": {
-      }
-    },
-    {
-      "findRule": "DEVICE",
-      "action": "BACK",
-      "uiInfo": {
-      }
-    },
-    {
-      "findRule": "DEVICE",
-      "action": "BACK",
-      "uiInfo": {
-      }
+      ]
     }
   ]
 }

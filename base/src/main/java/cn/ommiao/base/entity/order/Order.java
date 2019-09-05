@@ -4,6 +4,8 @@ import cn.ommiao.base.entity.JavaBean;
 
 public class Order extends JavaBean {
 
+    public static final int INFINITE = 0;
+
     public FindRule findRule;
 
     public Action action;
@@ -14,8 +16,10 @@ public class Order extends JavaBean {
 
     public UiInfo uiInfo;
 
-    public String notFoundEvent;
+    public NotFoundEvent notFoundEvent;
 
     public Order alternate;
+
+    public long timeout;
 
 }

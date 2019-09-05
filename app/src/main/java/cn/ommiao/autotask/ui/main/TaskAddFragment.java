@@ -29,6 +29,7 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FragmentTaskAddBinding;
@@ -41,6 +42,7 @@ import cn.ommiao.autotask.ui.listener.SimpleAnimatorListener;
 import cn.ommiao.base.entity.order.Action;
 import cn.ommiao.base.entity.order.FindRule;
 import cn.ommiao.base.entity.order.Group;
+import cn.ommiao.base.entity.order.NotFoundEvent;
 import cn.ommiao.base.entity.order.Order;
 import cn.ommiao.base.entity.order.Task;
 
@@ -61,7 +63,7 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
 
     @Override
     protected void initViews() {
-        ImmersionBar.with(this).statusBarView(mBinding.vStatusBar).statusBarDarkFont(true).init();
+        ImmersionBar.with(this).statusBarView(mBinding.vStatusBar).keyboardEnable(true).statusBarDarkFont(true).init();
         mBinding.fabAdd.getViewTreeObserver().addOnPreDrawListener(this);
         mBinding.ivBack.setOnClickListener(view -> {
             closeReveal(mBinding.getRoot());
@@ -241,8 +243,16 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
 
     private Order getNewOrder(){
         Order order = new Order();
-        order.findRule = FindRule.ID;
+        order.findRule = getRandomFindRule();
+        order.notFoundEvent = NotFoundEvent.ERROR;
         order.action = Action.CLICK;
+        order.repeatTimes = 1;
+        order.delay = 1000;
         return order;
+    }
+
+    private FindRule getRandomFindRule(){
+        int r = new Random().nextInt(FindRule.values().length);
+        return FindRule.values()[r];
     }
 }

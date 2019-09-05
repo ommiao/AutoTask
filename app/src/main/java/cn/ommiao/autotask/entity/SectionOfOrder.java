@@ -1,5 +1,7 @@
 package cn.ommiao.autotask.entity;
 
+import android.view.View;
+
 import com.chad.library.adapter.base.entity.SectionEntity;
 
 import cn.ommiao.base.entity.order.Group;
@@ -8,6 +10,7 @@ import cn.ommiao.base.entity.order.Order;
 public class SectionOfOrder extends SectionEntity<Order> {
 
     public Group groupOfOrder;
+    public View uiInfoView;
 
     public SectionOfOrder(boolean isHeader, String header, Group groupOfOrder) {
         super(isHeader, header);

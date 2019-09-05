@@ -35,12 +35,62 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/margin_order_list">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:text="执行动作"/>
+
+        <TextView
+            android:id="@+id/tv_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textSize="15sp"
+            tools:text="点击控件"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="重复次数"
+            android:textColor="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/et_repeat_times"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="end"
+            android:textSize="15sp"
+            android:digits="0123456789"
+            android:inputType="phone"
+            tools:text="1"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="@dimen/margin_order_list">
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,25 +111,71 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_uiinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="控件信息"
+            android:layout_marginBottom="@dimen/margin_order_list"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_not_found_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/margin_order_list"
+        android:layout_marginBottom="@dimen/margin_order_list">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="@android:color/black"
-            android:text="执行动作"/>
+            android:text="控件未找到时"/>
 
         <TextView
-            android:id="@+id/tv_action"
+            android:id="@+id/tv_not_found_event"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
             android:textSize="15sp"
-            tools:text="点击"/>
+            tools:text="报告错误，停止运行"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="执行后延时(ms)"
+            android:textColor="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/et_delay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="end"
+            android:textSize="15sp"
+            android:digits="0123456789"
+            android:inputType="phone"
+            tools:text="1000"/>
 
     </LinearLayout>
 

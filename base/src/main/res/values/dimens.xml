@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_order_list">10dp</dimen>
+    <dimen name="padding_order_content">20dp</dimen>
+    <dimen name="label_uiinfo">15sp</dimen>
+</resources>

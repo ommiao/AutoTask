@@ -4,7 +4,6 @@
     <dimen name="task_name_size">18sp</dimen>
     <dimen name="task_desc_size">15sp</dimen>
     <dimen name="task_list_horizontal_margin">15dp</dimen>
-    <dimen name="margin_order_list">10dp</dimen>
     <dimen name="height_order_section_bottom">10dp</dimen>
     <dimen name="height_order_section_top">60dp</dimen>
     <dimen name="corners_order_list">0dp</dimen>
