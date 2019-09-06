@@ -7,4 +7,5 @@
     <dimen name="height_order_section_bottom">10dp</dimen>
     <dimen name="height_order_section_top">60dp</dimen>
     <dimen name="corners_order_list">0dp</dimen>
+    <dimen name="corners_group_top">20dp</dimen>
 </resources>

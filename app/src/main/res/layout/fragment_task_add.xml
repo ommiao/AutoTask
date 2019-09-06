@@ -60,31 +60,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/ll_title_bar"
-                app:cardElevation="0dp"
-                app:cardCornerRadius="15dp"
-                app:cardBackgroundColor="@color/colorOrderListBg">
+                android:layout_marginBottom="-10dp"
+                app:cardBackgroundColor="@color/colorOrderListBg"
+                app:cardCornerRadius="10dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_orders"
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vp_group"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorOrderListBg"
-                    android:elevation="5dp"
-                    tools:listitem="@layout/item_order_list"/>
+                    android:layout_marginBottom="10dp"/>
 
             </androidx.cardview.widget.CardView>
 
+
         </RelativeLayout>
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_add"
+            android:id="@+id/fab_hidden"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_margin="16dp"
             android:src="@drawable/ic_add"
             android:tint="@color/colorPrimary"
+            android:visibility="invisible"
             app:backgroundTint="@android:color/white"
             app:fabCustomSize="45dp" />
 

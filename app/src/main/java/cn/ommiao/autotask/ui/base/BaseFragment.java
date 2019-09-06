@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
+import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.interfaces.OnFragmentChangedListener;
 
 public abstract class BaseFragment<B extends ViewDataBinding, M extends ViewModel> extends Fragment {
@@ -35,7 +37,6 @@ public abstract class BaseFragment<B extends ViewDataBinding, M extends ViewMode
     @Override
     public void onStart() {
         super.onStart();
-        backPressedListener.setFocusedFragment(this);
     }
 
     protected void init() {
@@ -66,6 +67,22 @@ public abstract class BaseFragment<B extends ViewDataBinding, M extends ViewMode
     protected abstract Class<M> classOfViewModel();
 
     protected abstract @LayoutRes int getLayoutId();
+
+    protected void addFragmentToBackStack(@IdRes int resId, BaseFragment fragment){
+        assert getFragmentManager() != null;
+        getFragmentManager()
+                .beginTransaction()
+                .add(resId, fragment)
+                .addToBackStack(fragment.getClass().getSimpleName())
+                .commit();
+        backPressedListener.setFocusedFragment(fragment);
+
+    }
+
+    protected void popBackStack(){
+        assert getFragmentManager() != null;
+        getFragmentManager().popBackStack();
+    }
 
     public boolean listenBackPressed(){
         return false;

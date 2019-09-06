@@ -1,5 +1,7 @@
 package cn.ommiao.base.entity.order;
 
+import android.view.View;
+
 import cn.ommiao.base.entity.JavaBean;
 
 public class Order extends JavaBean {
@@ -21,5 +23,7 @@ public class Order extends JavaBean {
     public Order alternate;
 
     public long timeout;
+
+    public transient View uiInfoView;
 
 }
