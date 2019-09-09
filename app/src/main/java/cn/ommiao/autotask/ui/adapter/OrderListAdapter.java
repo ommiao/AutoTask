@@ -57,4 +57,13 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
 
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if(payloads.isEmpty()){
+            super.onBindViewHolder(holder, position, payloads);
+            return;
+        }
+        int no = position + 1 - getHeaderLayoutCount();
+        holder.setText(R.id.tv_order_title, "指令" + no);
+    }
 }

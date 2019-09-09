@@ -94,6 +94,6 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
     public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
         group.orders.remove(i);
         adapter.notifyItemRemoved(i + adapter.getHeaderLayoutCount());
-        adapter.notifyItemRangeChanged(i + adapter.getHeaderLayoutCount(), group.orders.size() - i);
+        adapter.notifyItemRangeChanged(i + adapter.getHeaderLayoutCount(), group.orders.size() - i, "title");
     }
 }
