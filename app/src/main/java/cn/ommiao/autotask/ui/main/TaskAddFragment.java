@@ -43,7 +43,7 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
     protected void initViews() {
         mBinding.getRoot().postDelayed(statusBarSetter, getResources().getInteger(R.integer.task_add_animation_time));
         mBinding.ivBack.setOnClickListener(view -> {
-
+            onBackPressed();
         });
         mBinding.vpGroup.setAdapter(new GroupPagerAdapter(getChildFragmentManager(), fragments));
     }

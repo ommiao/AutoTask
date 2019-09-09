@@ -4,8 +4,7 @@
     <color name="colorPrimaryDark">#2168fd</color>
     <color name="colorAccent">#2168fd</color>
     <color name="halfWhite">#99FFFFFF</color>
-    <color name="defaultTaskMask">#17244E</color>
-    <color name="colorOrderListBg">#EEEEEE</color>
+    <color name="colorOrderListBg">#F1F1F1</color>
     <color name="colorOrderGroupTitle">#000000</color>
     <color name="colorListDivider">#F1F1F1</color>
 </resources>

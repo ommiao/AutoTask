@@ -1,6 +1,7 @@
 package cn.ommiao.base.entity.order;
 
 import android.view.View;
+import android.view.ViewGroup;
 
 import cn.ommiao.base.entity.JavaBean;
 
@@ -25,5 +26,7 @@ public class Order extends JavaBean {
     public long timeout;
 
     public transient View uiInfoView;
+
+    public transient ViewGroup uiInfoParent;
 
 }

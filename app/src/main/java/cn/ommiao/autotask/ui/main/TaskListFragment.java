@@ -117,18 +117,27 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
     }
 
     private Task getTask(){
+//        Task task = new Task();
+//        task.groups = new ArrayList<>();
+//        Group group1 = new Group();
+//        group1.groupName = "指令组1";
+//        group1.repeatTimes = 1;
+//        group1.addOrder(getNewOrder());
+//        group1.addOrder(getNewOrder());
+//        Group group2 = new Group();
+//        group2.groupName = "指令组2";
+//        group2.repeatTimes = 1;
+//        task.groups.add(group1);
+//        task.groups.add(group2);
+//        return task;
+//        return Task.fromJson(OrderUtil.readOrders(mContext), Task.class);
         Task task = new Task();
         task.groups = new ArrayList<>();
-        Group group1 = new Group();
-        group1.groupName = "指令组1";
-        group1.repeatTimes = 1;
-        group1.addOrder(getNewOrder());
-        group1.addOrder(getNewOrder());
-        Group group2 = new Group();
-        group2.groupName = "指令组2";
-        group2.repeatTimes = 1;
-        task.groups.add(group1);
-        task.groups.add(group2);
+        Group group = new Group();
+        group.groupName = "指令组1";
+        group.repeatTimes = 1;
+        group.orders = new ArrayList<>();
+        task.groups.add(group);
         return task;
     }
 

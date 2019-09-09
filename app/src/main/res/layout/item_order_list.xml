@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,11 +28,19 @@
 
         <TextView
             android:id="@+id/tv_order_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="16sp"
             android:textColor="@color/colorPrimary"
             tools:text="指令1"/>
+
+        <ImageView
+            android:id="@+id/iv_remove_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@android:color/holo_red_dark"
+            android:src="@drawable/ic_remove"/>
 
     </LinearLayout>
 
@@ -114,6 +123,7 @@
         android:id="@+id/ll_uiinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_order_list"
         android:orientation="vertical">
 
         <TextView
@@ -131,7 +141,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/margin_order_list"
         android:layout_marginBottom="@dimen/margin_order_list">
 
         <TextView

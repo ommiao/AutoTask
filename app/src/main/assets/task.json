@@ -1,6 +1,9 @@
 {
+  "taskName": "收能量",
+  "taskDescription": "一键收取支付宝能量",
   "groups": [
     {
+      "groupName": "指令组test",
       "repeatTimes": 1,
       "orders": [
         {
@@ -8,7 +11,8 @@
           "action": "HOME",
           "delay": 1000,
           "repeatTimes": 1,
-          "uiInfo": {}
+          "uiInfo": {},
+          "notFoundEvent": "ERROR"
         },
         {
           "findRule": "TEXT",
@@ -17,7 +21,8 @@
           "repeatTimes": 1,
           "uiInfo": {
             "text": "支付宝"
-          }
+          },
+          "notFoundEvent": "ERROR"
         },
         {
           "findRule": "ID",
@@ -26,7 +31,8 @@
           "repeatTimes": 1,
           "uiInfo": {
             "id": "com.alipay.android.phone.openplatform:id/more_app_text"
-          }
+          },
+          "notFoundEvent": "ERROR"
         },
         {
           "findRule": "TEXT",
@@ -35,7 +41,8 @@
           "repeatTimes": 1,
           "uiInfo": {
             "text": "蚂蚁森林"
-          }
+          },
+          "notFoundEvent": "ERROR"
         },
         {
           "findRule": "TEXT_CONTAINS",
@@ -45,14 +52,16 @@
           "timeout": 2000,
           "uiInfo": {
             "text": "收集能量"
-          }
+          },
+          "notFoundEvent": "ERROR"
         },
         {
           "findRule": "DEVICE",
           "action": "BACK",
           "delay": 1000,
           "repeatTimes": 3,
-          "uiInfo": {}
+          "uiInfo": {},
+          "notFoundEvent": "ERROR"
         }
       ]
     }

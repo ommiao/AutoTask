@@ -35,7 +35,11 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
         if(llUiInfo.getChildCount() == 2){
             llUiInfo.removeViewAt(1);
         }
+        if(order.uiInfoView.getParent() != null && order.uiInfoParent != null){
+            order.uiInfoParent.removeView(order.uiInfoView);
+        }
         llUiInfo.addView(order.uiInfoView);
+        order.uiInfoParent = llUiInfo;
 
         LinearLayout llNotFoundEvent = baseViewHolder.getView(R.id.ll_not_found_event);
         if(order.findRule != FindRule.DEVICE){
@@ -48,6 +52,8 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
         baseViewHolder.setText(R.id.et_repeat_times, String.valueOf(order.repeatTimes));
 
         baseViewHolder.setText(R.id.et_delay, String.valueOf(order.delay));
+
+        baseViewHolder.addOnClickListener(R.id.iv_remove_order);
 
     }
 
