@@ -12,4 +12,9 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="dialog_enter_exit">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
 </resources>

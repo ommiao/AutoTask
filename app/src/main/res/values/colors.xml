@@ -7,4 +7,5 @@
     <color name="colorOrderListBg">#F1F1F1</color>
     <color name="colorOrderGroupTitle">#000000</color>
     <color name="colorListDivider">#F1F1F1</color>
+    <color name="colorWarningRed">#F65A56</color>
 </resources>

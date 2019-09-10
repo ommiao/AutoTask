@@ -1,6 +1,6 @@
 package cn.ommiao.base.entity.order;
 
-public enum NotFoundEvent {
+public enum NotFoundEvent implements BaseEnum<NotFoundEvent>{
 
       ERROR("报告异常，停止运行")
     , IGNORE("忽略该条，继续执行")
@@ -14,7 +14,18 @@ public enum NotFoundEvent {
           this.description = description;
       }
 
+    @Override
+    public String getTitle() {
+        return "控件未找到时事件";
+    }
+
+    @Override
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public NotFoundEvent getEnum() {
+        return this;
     }
 }

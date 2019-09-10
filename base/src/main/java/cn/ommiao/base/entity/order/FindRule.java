@@ -8,7 +8,7 @@ import cn.ommiao.base.findrulehelper.IdHelper;
 import cn.ommiao.base.findrulehelper.TextHelper;
 import cn.ommiao.base.findrulehelper.TextParentIdScrollHelper;
 
-public enum FindRule {
+public enum FindRule implements BaseEnum<FindRule>{
 
       DEVICE("不找控件", new DeviceHelper())
     , ID("控件ID", new IdHelper())
@@ -27,11 +27,22 @@ public enum FindRule {
         this.findRuleHelper = findRuleHelper;
     }
 
+    public BaseFindRuleHelper getFindRuleHelper() {
+        return findRuleHelper;
+    }
+
+    @Override
+    public String getTitle() {
+        return "控件查找规则";
+    }
+
+    @Override
     public String getDescription() {
         return description;
     }
 
-    public BaseFindRuleHelper getFindRuleHelper() {
-        return findRuleHelper;
+    @Override
+    public FindRule getEnum() {
+        return this;
     }
 }

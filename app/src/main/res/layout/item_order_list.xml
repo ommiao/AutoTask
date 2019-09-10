@@ -39,7 +39,7 @@
             android:id="@+id/iv_remove_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@android:color/holo_red_dark"
+            android:tint="@color/colorWarningRed"
             android:src="@drawable/ic_remove"/>
 
     </LinearLayout>
@@ -98,6 +98,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="执行后延时(ms)"
+            android:textColor="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/et_delay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="end"
+            android:textSize="15sp"
+            android:digits="0123456789"
+            android:inputType="phone"
+            tools:text="1000"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/margin_order_list">
 
@@ -116,23 +143,6 @@
             android:gravity="end"
             android:textSize="15sp"
             tools:text="控件id"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_uiinfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_order_list"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="控件信息"
-            android:layout_marginBottom="@dimen/margin_order_list"/>
-
 
     </LinearLayout>
 
@@ -162,29 +172,19 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_uiinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginBottom="@dimen/margin_order_list"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="执行后延时(ms)"
-            android:textColor="@android:color/black"/>
+            android:textSize="14sp"
+            android:text="控件信息"
+            android:layout_marginBottom="@dimen/margin_order_list"/>
 
-        <EditText
-            android:id="@+id/et_delay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="end"
-            android:textSize="15sp"
-            android:digits="0123456789"
-            android:inputType="phone"
-            tools:text="1000"/>
 
     </LinearLayout>
 
