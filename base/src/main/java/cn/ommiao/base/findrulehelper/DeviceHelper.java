@@ -18,7 +18,12 @@ public class DeviceHelper extends BaseFindRuleHelper {
     }
 
     @Override
-    protected void saveToOrder(View view, Order order) {
+    public void saveToOrder(View view, Order order) {
+
+    }
+
+    @Override
+    public void setData(View view, Order order) {
 
     }
 }

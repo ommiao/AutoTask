@@ -22,9 +22,14 @@ public class ClassNameHelper extends BaseFindRuleHelper {
     }
 
     @Override
-    protected void saveToOrder(View view, Order order) {
+    public void saveToOrder(View view, Order order) {
         order.uiInfo = new UiInfo();
         order.uiInfo.className = getEditTextContent(view, R.id.et_classname);
+    }
+
+    @Override
+    public void setData(View view, Order order) {
+        getEditText(view, R.id.et_classname).setText(order.uiInfo.className);
     }
 
 }

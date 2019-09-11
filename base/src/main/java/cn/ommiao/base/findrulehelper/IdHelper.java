@@ -22,9 +22,14 @@ public class IdHelper extends BaseFindRuleHelper {
     }
 
     @Override
-    protected void saveToOrder(View view, Order order) {
+    public void saveToOrder(View view, Order order) {
         order.uiInfo = new UiInfo();
         order.uiInfo.id = getEditTextContent(view, R.id.et_id);
+    }
+
+    @Override
+    public void setData(View view, Order order) {
+        getEditText(view, R.id.et_id).setText(order.uiInfo.id);
     }
 
 }

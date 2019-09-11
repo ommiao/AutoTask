@@ -17,7 +17,7 @@ public class Order extends JavaBean {
 
     public long delay;
 
-    public UiInfo uiInfo;
+    public UiInfo uiInfo = new UiInfo();
 
     public NotFoundEvent notFoundEvent;
 

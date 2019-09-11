@@ -22,9 +22,14 @@ public class DescriptionHelper extends BaseFindRuleHelper {
     }
 
     @Override
-    protected void saveToOrder(View view, Order order) {
+    public void saveToOrder(View view, Order order) {
         order.uiInfo = new UiInfo();
         order.uiInfo.description = getEditTextContent(view, R.id.et_description);
+    }
+
+    @Override
+    public void setData(View view, Order order) {
+        getEditText(view, R.id.et_description).setText(order.uiInfo.description);
     }
 
 }

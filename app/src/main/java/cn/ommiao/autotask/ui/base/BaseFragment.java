@@ -16,7 +16,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
-import cn.ommiao.autotask.R;
+import java.util.List;
+
 import cn.ommiao.autotask.interfaces.OnFragmentChangedListener;
 
 public abstract class BaseFragment<B extends ViewDataBinding, M extends ViewModel> extends Fragment {
@@ -81,7 +82,19 @@ public abstract class BaseFragment<B extends ViewDataBinding, M extends ViewMode
 
     protected void popBackStack(){
         assert getFragmentManager() != null;
-        getFragmentManager().popBackStack();
+        List<Fragment> fragments = getFragmentManager().getFragments();
+        int size = fragments.size();
+        if(size < 2){
+            return;
+        }
+        for(int i = size - 2; i >= 0; i--){
+            Fragment fragment = fragments.get(i);
+            if(fragment instanceof BaseFragment){
+                BaseFragment baseFragment = (BaseFragment)fragment;
+                backPressedListener.setFocusedFragment(baseFragment);
+                getFragmentManager().popBackStack();
+            }
+        }
     }
 
     public boolean listenBackPressed(){

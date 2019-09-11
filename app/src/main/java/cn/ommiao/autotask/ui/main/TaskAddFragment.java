@@ -20,6 +20,10 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
 
     private ArrayList<GroupFragment> fragments = new ArrayList<>();
 
+    public TaskAddFragment(){
+
+    }
+
     public TaskAddFragment(Task task){
         this.task = task;
     }

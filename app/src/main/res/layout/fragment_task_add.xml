@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/v_status_bar"
                 android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:padding="15dp">
 
                 <ImageView
@@ -47,6 +48,19 @@
                     android:textSize="16sp"
                     android:maxLines="1"
                     android:ellipsize="end"/>
+
+                <ImageView
+                    android:id="@+id/iv_add_group"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_add_group" />
+
+                <ImageView
+                    android:id="@+id/iv_save_task"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_save" />
 
             </LinearLayout>
 

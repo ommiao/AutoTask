@@ -22,7 +22,9 @@ public abstract class BaseFindRuleHelper {
 
     public abstract String isDataValid(View view);
 
-    protected abstract void saveToOrder(View view, Order order);
+    public abstract void saveToOrder(View view, Order order);
+
+    public abstract void setData(View view, Order order);
 
     protected boolean isEditTextFilled(View view, @IdRes int etId){
         String text = getEditTextContent(view, etId);
@@ -32,6 +34,11 @@ public abstract class BaseFindRuleHelper {
     protected String getEditTextContent(View view, @IdRes int etId){
         EditText editText = view.findViewById(etId);
         return editText.getText().toString().trim();
+    }
+
+    protected EditText getEditText(View view, @IdRes int etId){
+        EditText editText = view.findViewById(etId);
+        return editText;
     }
 
 }

@@ -18,17 +18,35 @@
             android:background="@android:color/white"
             android:layout_marginTop="@dimen/margin_order_list">
 
-            <TextView
-                android:id="@+id/tv_group_title"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:textSize="17sp"
-                tools:text="指令组1"
-                android:textColor="@color/colorPrimary"/>
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_group_title"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    tools:text="指令组1"
+                    android:textColor="@color/colorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/iv_remove_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tint="@color/colorWarningRed"
+                    android:src="@drawable/ic_remove"/>
+
+            </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"

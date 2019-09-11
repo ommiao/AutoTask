@@ -24,11 +24,17 @@ public class TextParentIdScrollHelper extends BaseFindRuleHelper {
     }
 
     @Override
-    protected void saveToOrder(View view, Order order) {
+    public void saveToOrder(View view, Order order) {
         order.uiInfo = new UiInfo();
         order.uiInfo.text = getEditTextContent(view, R.id.et_text);
         order.uiInfo.parent = new UiInfo();
         order.uiInfo.parent.id = getEditTextContent(view, R.id.et_parent_id);
+    }
+
+    @Override
+    public void setData(View view, Order order) {
+        getEditText(view, R.id.et_text).setText(order.uiInfo.text);
+        getEditText(view, R.id.et_parent_id).setText(order.uiInfo.parent.id);
     }
 
 }

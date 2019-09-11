@@ -8,7 +8,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FooterOrderListBinding;
@@ -23,6 +24,7 @@ import cn.ommiao.base.entity.order.Group;
 import cn.ommiao.base.entity.order.NotFoundEvent;
 import cn.ommiao.base.entity.order.Order;
 import cn.ommiao.base.entity.order.UiInfo;
+import cn.ommiao.base.util.StringUtil;
 
 import static cn.ommiao.autotask.ui.adapter.OrderListAdapter.PAYLOAD_ACTION;
 import static cn.ommiao.autotask.ui.adapter.OrderListAdapter.PAYLOAD_FIND_RULE;
@@ -35,10 +37,31 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
 
     private OrderListAdapter adapter;
     private HeaderOrderListBinding headerOrderListBinding;
-    private FooterOrderListBinding footerOrderListBinding;
+
+    public GroupFragment(){
+
+    }
 
     public GroupFragment(Group group){
         this.group = group;
+    }
+
+    public void saveData(){
+        String rTimes = headerOrderListBinding.etRepeatTimes.getText().toString().trim();
+        if(StringUtil.isEmpty(rTimes)){
+            rTimes = "1";
+        }
+        group.repeatTimes = Integer.parseInt(rTimes);
+        for (Order order : group.orders) {
+            order.findRule.getFindRuleHelper().saveToOrder(order.uiInfoView, order);
+        }
+    }
+
+    @Override
+    protected void init() {
+        if(group.orders == null){
+            group.orders = new ArrayList<>();
+        }
     }
 
     @Override
@@ -49,11 +72,16 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
         assert headerOrderListBinding != null;
         headerOrderListBinding.tvGroupTitle.setText(group.groupName);
         headerOrderListBinding.etRepeatTimes.setText(String.valueOf(group.repeatTimes));
+        headerOrderListBinding.ivRemoveGroup.setOnClickListener(view -> {
+            if(onGroupRemoveListener != null){
+                onGroupRemoveListener.onGroupRemove(group);
+            }
+        });
         mBinding.rvOrders.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new OrderListAdapter(R.layout.item_order_list, group.orders);
         adapter.addHeaderView(header);
         View footer = LayoutInflater.from(mContext).inflate(R.layout.footer_order_list, null);
-        footerOrderListBinding = DataBindingUtil.bind(footer);
+        FooterOrderListBinding footerOrderListBinding = DataBindingUtil.bind(footer);
         assert footerOrderListBinding != null;
         footerOrderListBinding.ivAddOrder.setOnClickListener(view -> {
             group.addOrder(getNewOrder());
@@ -62,6 +90,10 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
         adapter.addFooterView(footer);
         adapter.setOnItemChildClickListener(this);
         mBinding.rvOrders.setAdapter(adapter);
+    }
+
+    public void refreshTitle(){
+        headerOrderListBinding.tvGroupTitle.setText(group.groupName);
     }
 
     @Override
@@ -159,5 +191,15 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
 
                 })
                 .show(getChildFragmentManager());
+    }
+
+    private OnGroupRemoveListener onGroupRemoveListener;
+
+    public void setOnGroupRemoveListener(OnGroupRemoveListener onGroupRemoveListener) {
+        this.onGroupRemoveListener = onGroupRemoveListener;
+    }
+
+    public interface OnGroupRemoveListener{
+        void onGroupRemove(Group group);
     }
 }
