@@ -92,10 +92,6 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
         mBinding.rvOrders.setAdapter(adapter);
     }
 
-    public void refreshTitle(){
-        headerOrderListBinding.tvGroupTitle.setText(group.groupName);
-    }
-
     @Override
     protected Class<MainViewModel> classOfViewModel() {
         return MainViewModel.class;

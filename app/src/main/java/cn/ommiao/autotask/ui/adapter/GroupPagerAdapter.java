@@ -1,14 +1,15 @@
 package cn.ommiao.autotask.ui.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
 import cn.ommiao.autotask.ui.main.GroupFragment;
 
-public class GroupPagerAdapter extends FragmentPagerAdapter {
+public class GroupPagerAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<GroupFragment> fragments;
 
@@ -27,4 +28,8 @@ public class GroupPagerAdapter extends FragmentPagerAdapter {
         return fragments == null ? 0 : fragments.size();
     }
 
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
+    }
 }
