@@ -91,7 +91,11 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
     }
 
     private void saveTask(){
+        task.taskName = "保存测试";
+        task.taskDescription = "这个任务是通过添加页面保存的";
         Logger.d(task.toJson());
+        mViewModel.addNewTask(task);
+        popBackStack();
     }
 
     @Override

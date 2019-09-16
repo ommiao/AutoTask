@@ -16,6 +16,7 @@ public class MainViewModel extends ViewModel {
     public static final String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/cn.ommiao.autotask/files/";
 
     private MutableLiveData<ArrayList<Task>> taskLiveData = new MutableLiveData<>();
+    private MutableLiveData<Task> newTask = new MutableLiveData<>();
 
     public MutableLiveData<ArrayList<Task>> getTasks(){
         loadTasks();
@@ -28,4 +29,16 @@ public class MainViewModel extends ViewModel {
         taskLiveData.setValue(tasks);
     }
 
+    public void addNewTask(Task task){
+        newTask.setValue(task);
+
+    }
+
+    public void clearNewTask(){
+        newTask.setValue(null);
+    }
+
+    public MutableLiveData<Task> getNewTask() {
+        return newTask;
+    }
 }

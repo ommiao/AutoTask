@@ -158,11 +158,18 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
 
     @Override
     protected void initData() {
-        mViewModel.getTasks().observe(this, tasks -> {
+        mViewModel.getTasks().observe(mContext, tasks -> {
             if(!loaded){
                 this.tasks.addAll(tasks);
                 adapter.notifyDataSetChanged();
                 loaded = true;
+            }
+        });
+        mViewModel.getNewTask().observe(mContext, newTask -> {
+            if(newTask != null){
+                tasks.add(newTask);
+                mViewModel.clearNewTask();
+                adapter.notifyItemInserted(tasks.size() - 1 + adapter.getHeaderLayoutCount());
             }
         });
     }
@@ -182,7 +189,7 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         switch (view.getId()){
             case R.id.fl_start:
                 if(isServerRun){
-                    FileUtil.writeTask(OrderUtil.readOrders(mContext));
+                    FileUtil.writeTask(tasks.get(position).toJson());
                     client.send(Client.RUN_TEST);
                 } else {
                     Toast.makeText(mContext, "Server is not running.", Toast.LENGTH_SHORT).show();
