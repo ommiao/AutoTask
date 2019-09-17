@@ -27,6 +27,7 @@ import cn.ommiao.autotask.databinding.FragmentTaskListBinding;
 import cn.ommiao.autotask.task.Client;
 import cn.ommiao.autotask.ui.adapter.TaskListAdapter;
 import cn.ommiao.autotask.ui.base.BaseFragment;
+import cn.ommiao.autotask.ui.common.CustomDialogFragment;
 import cn.ommiao.autotask.util.UiUtil;
 import cn.ommiao.base.entity.order.Action;
 import cn.ommiao.base.entity.order.FindRule;
@@ -35,7 +36,6 @@ import cn.ommiao.base.entity.order.NotFoundEvent;
 import cn.ommiao.base.entity.order.Order;
 import cn.ommiao.base.entity.order.Task;
 import cn.ommiao.base.util.FileUtil;
-import cn.ommiao.base.util.OrderUtil;
 
 public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, MainViewModel> implements BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener {
 
@@ -168,7 +168,6 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         mViewModel.getNewTask().observe(mContext, newTask -> {
             if(newTask != null){
                 tasks.add(newTask);
-                mViewModel.clearNewTask();
                 adapter.notifyItemInserted(tasks.size() - 1 + adapter.getHeaderLayoutCount());
             }
         });
@@ -192,7 +191,14 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
                     FileUtil.writeTask(tasks.get(position).toJson());
                     client.send(Client.RUN_TEST);
                 } else {
-                    Toast.makeText(mContext, "Server is not running.", Toast.LENGTH_SHORT).show();
+                    new CustomDialogFragment()
+                            .title("提示")
+                            .content("Server is not running.")
+                            .rightBtn("确定")
+                            .onRightClick(() -> {
+
+                            })
+                            .show(getChildFragmentManager());
                 }
                 break;
             case R.id.fl_edit:

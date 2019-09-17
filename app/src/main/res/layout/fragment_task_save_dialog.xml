@@ -65,9 +65,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textSize="16sp"
-                        tools:text="任务名称"
-                        android:background="@android:color/transparent"
+                        android:textSize="15sp"
+                        android:hint="@string/label_task_name"
+                        android:background="@drawable/bg_task_add_input"
+                        android:padding="8dp"
                         android:maxLines="1"
                         android:maxLength="20"/>
 
@@ -82,11 +83,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textSize="15sp"
-                        tools:text="任务描述"
-                        android:background="@android:color/transparent"
-                        android:maxLines="1"
-                        android:maxLength="50"/>
+                        android:textSize="14sp"
+                        android:hint="@string/label_task_description"
+                        android:background="@drawable/bg_task_add_input"
+                        android:padding="8dp"
+                        android:maxLines="3"
+                        android:minLines="3"
+                        android:maxLength="50"
+                        android:gravity="top"/>
 
                 </LinearLayout>
 

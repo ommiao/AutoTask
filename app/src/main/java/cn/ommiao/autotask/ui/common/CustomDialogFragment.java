@@ -114,6 +114,7 @@ public class CustomDialogFragment extends DialogFragment {
         dialog.setCanceledOnTouchOutside(false);
         Window window = dialog.getWindow();
         assert window != null;
+        window.setWindowAnimations(R.style.dialog_enter_exit);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams attributes = window.getAttributes();
         attributes.height = WindowManager.LayoutParams.WRAP_CONTENT;

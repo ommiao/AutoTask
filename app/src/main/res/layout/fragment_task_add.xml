@@ -51,15 +51,15 @@
 
                 <ImageView
                     android:id="@+id/iv_add_group"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/ic_add_group" />
 
                 <ImageView
                     android:id="@+id/iv_save_task"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:src="@drawable/ic_save" />
 
             </LinearLayout>

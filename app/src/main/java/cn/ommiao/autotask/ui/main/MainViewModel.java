@@ -34,10 +34,6 @@ public class MainViewModel extends ViewModel {
 
     }
 
-    public void clearNewTask(){
-        newTask.setValue(null);
-    }
-
     public MutableLiveData<Task> getNewTask() {
         return newTask;
     }

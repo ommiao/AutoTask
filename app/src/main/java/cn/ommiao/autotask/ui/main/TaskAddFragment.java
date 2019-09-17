@@ -91,23 +91,44 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
     }
 
     private void saveTask(){
-        TaskSaveDialogFragment saveDialogFragment = new TaskSaveDialogFragment();
-        saveDialogFragment.setOnTaskSaveListener(new TaskSaveDialogFragment.OnTaskSaveListener() {
-            @Override
-            public void onTaskSaveConfirm(String taskName, String taskDescription) {
-                task.taskName = taskName;
-                task.taskDescription = taskDescription;
-                Logger.d(task.toJson());
-                mViewModel.addNewTask(task);
-                popBackStack();
-            }
+        if(isPreChecked()){
+            TaskSaveDialogFragment saveDialogFragment = new TaskSaveDialogFragment();
+            saveDialogFragment.setOnTaskSaveListener(new TaskSaveDialogFragment.OnTaskSaveListener() {
+                @Override
+                public void onTaskSaveConfirm(String taskName, String taskDescription) {
+                    task.taskName = taskName;
+                    task.taskDescription = taskDescription;
+                    Logger.d(task.toJson());
+                    mViewModel.addNewTask(task);
+                    ImmersionBar.with(TaskAddFragment.this).statusBarDarkFont(true).init();
+                    popBackStack();
+                }
 
-            @Override
-            public void onTaskSaveCancel() {
+                @Override
+                public void onTaskSaveCancel() {
 
+                }
+            });
+            saveDialogFragment.show(getChildFragmentManager(), TaskSaveDialogFragment.class.getSimpleName());
+        }
+    }
+
+    private boolean isPreChecked() {
+        for (Group group : task.groups) {
+            if(group.orders == null || group.orders.size() == 0){
+                String msg = group.groupName + "不包含任何指令，请检查。";
+                new CustomDialogFragment()
+                        .title("提示")
+                        .content(msg)
+                        .rightBtn("确定")
+                        .onRightClick(() -> {
+
+                        })
+                        .show(getChildFragmentManager());
+                return false;
             }
-        });
-        saveDialogFragment.show(getChildFragmentManager(), TaskSaveDialogFragment.class.getSimpleName());
+        }
+        return true;
     }
 
     @Override
