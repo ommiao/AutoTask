@@ -1,35 +1,25 @@
 package cn.ommiao.base.findrulehelper;
 
-import android.view.View;
+import androidx.annotation.NonNull;
+import androidx.test.uiautomator.BySelector;
+import androidx.test.uiautomator.UiSelector;
 
-import cn.ommiao.base.R;
-import cn.ommiao.base.entity.order.Order;
-import cn.ommiao.base.entity.order.UiInfo;
+import cn.ommiao.base.entity.order.FindRule;
 
-public class TextContainsHelper extends BaseFindRuleHelper {
+public class TextContainsHelper extends TextHelper {
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.layout_uiinfo_text;
+    protected FindRule getFindRule() {
+        return FindRule.TEXT_CONTAINS;
     }
 
     @Override
-    public String isDataValid(View view) {
-        if(!isEditTextFilled(view, R.id.et_text)){
-            return "未录入控件文字";
-        }
-        return DATA_VALID;
+    public UiSelector bindUiSelector(@NonNull UiSelector uiSelector, String value) {
+        return uiSelector.textContains(value);
     }
 
     @Override
-    public void saveToOrder(View view, Order order) {
-        order.uiInfo = new UiInfo();
-        order.uiInfo.text = getEditTextContent(view, R.id.et_text);
+    public BySelector bindBySelector(@NonNull BySelector bySelector, String value) {
+        return bySelector.textContains(value);
     }
-
-    @Override
-    public void setData(View view, Order order) {
-        getEditText(view, R.id.et_text).setText(order.uiInfo.text);
-    }
-
 }

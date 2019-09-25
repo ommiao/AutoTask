@@ -2,9 +2,12 @@ package cn.ommiao.base.findrulehelper;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.test.uiautomator.BySelector;
+import androidx.test.uiautomator.UiSelector;
+
 import cn.ommiao.base.R;
-import cn.ommiao.base.entity.order.Order;
-import cn.ommiao.base.entity.order.UiInfo;
+import cn.ommiao.base.entity.order.FindRule;
 
 public class TextHelper extends BaseFindRuleHelper {
 
@@ -22,14 +25,28 @@ public class TextHelper extends BaseFindRuleHelper {
     }
 
     @Override
-    public void saveToOrder(View view, Order order) {
-        order.uiInfo = new UiInfo();
-        order.uiInfo.text = getEditTextContent(view, R.id.et_text);
+    public void setData(View view, String value) {
+        setEditTextContent(view, R.id.et_text, value);
     }
 
     @Override
-    public void setData(View view, Order order) {
-        getEditText(view, R.id.et_text).setText(order.uiInfo.text);
+    protected String getValueFromView(View view) {
+        return getEditTextContent(view, R.id.et_text);
+    }
+
+    @Override
+    protected FindRule getFindRule() {
+        return FindRule.TEXT;
+    }
+
+    @Override
+    public UiSelector bindUiSelector(@NonNull UiSelector uiSelector, String value) {
+        return uiSelector.text(value);
+    }
+
+    @Override
+    public BySelector bindBySelector(@NonNull BySelector bySelector, String value) {
+        return bySelector.text(value);
     }
 
 }

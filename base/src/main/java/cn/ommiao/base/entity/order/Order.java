@@ -3,13 +3,13 @@ package cn.ommiao.base.entity.order;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+
 import cn.ommiao.base.entity.JavaBean;
 
 public class Order extends JavaBean {
 
     public static final int INFINITE = 0;
-
-    public FindRule findRule;
 
     public Action action;
 
@@ -25,8 +25,14 @@ public class Order extends JavaBean {
 
     public long timeout;
 
+    public HashMap<ExecuteParam, String> executeParams = new HashMap<>();
+
     public transient View uiInfoView;
 
     public transient ViewGroup uiInfoParent;
+
+    public String getParamValue(ExecuteParam param){
+        return executeParams.get(param);
+    }
 
 }

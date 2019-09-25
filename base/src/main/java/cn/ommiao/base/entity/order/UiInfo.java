@@ -1,14 +1,17 @@
 package cn.ommiao.base.entity.order;
 
+import java.util.HashMap;
+
 import cn.ommiao.base.entity.JavaBean;
 
 public class UiInfo extends JavaBean {
 
-    public String id, description, text, className, data, position;
+    public UiInfo parent;
 
-    public String targetPackageName;
+    public HashMap<FindRule, String> findRules = new HashMap<>();
 
-    public UiInfo parent, child;
-
+    public String getParamValue(FindRule findRule){
+        return findRules.get(findRule);
+    }
 
 }
