@@ -4,4 +4,5 @@ public interface BaseEnum<E extends Enum> {
     String getTitle();
     String getDescription();
     E getEnum();
+    EnumGroup getEnumGroup();
 }

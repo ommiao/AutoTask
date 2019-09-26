@@ -28,4 +28,9 @@ public enum NotFoundEvent implements BaseEnum<NotFoundEvent>{
     public NotFoundEvent getEnum() {
         return this;
     }
+
+    @Override
+    public EnumGroup getEnumGroup() {
+        return EnumGroup.NOT_FOUND_EVENT;
+    }
 }

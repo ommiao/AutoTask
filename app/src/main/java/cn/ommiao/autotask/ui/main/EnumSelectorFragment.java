@@ -17,20 +17,22 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FragmentEnumSelectorBinding;
 import cn.ommiao.autotask.ui.adapter.EnumListAdapter;
+import cn.ommiao.autotask.util.ToastUtil;
 import cn.ommiao.base.entity.order.BaseEnum;
 
-public class EnumSelectorFragment<E extends Enum> extends DialogFragment implements BaseQuickAdapter.OnItemChildClickListener {
+public class EnumSelectorFragment<E extends Enum> extends DialogFragment {
 
     private Class<E> enumClass;
     private FragmentEnumSelectorBinding mBinding;
     private ArrayList<BaseEnum<E>> enums = new ArrayList<>();
+    private LinkedHashSet<E> selectedEnums = new LinkedHashSet<>();
 
     public EnumSelectorFragment(Class<E> enumClass){
         this.enumClass = enumClass;
@@ -49,17 +51,24 @@ public class EnumSelectorFragment<E extends Enum> extends DialogFragment impleme
         mBinding.ivClose.setOnClickListener(view -> dismiss());
         Enum[] enumConstants = enumClass.getEnumConstants();
         assert enumConstants != null;
-        String title = "请选择";
+        BaseEnum<E> first = (BaseEnum<E>) enumConstants[0];
+        String title = "请选择" + first.getTitle();
         for (Enum enumConstant : enumConstants) {
             BaseEnum<E> eBaseEnum = (BaseEnum<E>) enumConstant;
             enums.add(eBaseEnum);
-            title = "请选择" + eBaseEnum.getTitle();
         }
         mBinding.tvConfigTitle.setText(title);
-        EnumListAdapter adapter = new EnumListAdapter(R.layout.item_enum_list, enums);
-        adapter.setOnItemChildClickListener(this);
+        EnumListAdapter adapter = new EnumListAdapter(R.layout.item_enum_list, enums, selectedEnums);
         mBinding.rvEnum.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.rvEnum.setAdapter(adapter);
+        mBinding.tvConfirm.setOnClickListener(view -> {
+            if(selectedEnums.size() == 0){
+                ToastUtil.shortToast("请至少选择一项" + first.getTitle());
+            } else {
+                onEnumSelectorListener.onEnumSelected(selectedEnums);
+                dismiss();
+            }
+        });
     }
 
     @Override
@@ -86,16 +95,7 @@ public class EnumSelectorFragment<E extends Enum> extends DialogFragment impleme
         this.onEnumSelectorListener = onEnumSelectorListener;
     }
 
-    @Override
-    public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-        BaseEnum<E> eBaseEnum = enums.get(i);
-        if(onEnumSelectorListener != null){
-            onEnumSelectorListener.onEnumSelected(eBaseEnum.getEnum());
-        }
-        dismiss();
-    }
-
     public interface OnEnumSelectorListener<E>{
-        void onEnumSelected(E enumValue);
+        void onEnumSelected(LinkedHashSet<E> baseEnumSet);
     }
 }

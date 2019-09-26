@@ -33,6 +33,11 @@ public enum Action implements BaseEnum<Action> {
         return this;
     }
 
+    @Override
+    public EnumGroup getEnumGroup() {
+        return EnumGroup.ACTION;
+    }
+
     public boolean isGlobalAction() {
         return isGlobalAction;
     }

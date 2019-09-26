@@ -48,9 +48,24 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_enum"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 tools:listitem="@layout/item_enum_list"
                 tools:itemCount="3"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/colorListDivider"/>
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="15dp"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/confirm"/>
 
         </LinearLayout>
 

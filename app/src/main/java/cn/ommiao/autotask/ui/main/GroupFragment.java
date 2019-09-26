@@ -53,7 +53,7 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
         }
         group.repeatTimes = Integer.parseInt(rTimes);
         for (Order order : group.orders) {
-            order.findRule.getFindRuleHelper().saveToOrder(order.uiInfoView, order);
+
         }
     }
 
@@ -116,10 +116,8 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
     private Order getNewOrder(){
         Order order = new Order();
         order.repeatTimes = 1;
-        order.findRule = FindRule.ID;
         order.action = Action.CLICK;
         order.uiInfo = new UiInfo();
-        order.uiInfo.id = "id";
         order.notFoundEvent = NotFoundEvent.ERROR;
         return order;
     }
@@ -148,8 +146,8 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
 
     private void showActionSelector(int index){
         EnumSelectorFragment<Action> fragment = new EnumSelectorFragment<>(Action.class);
-        fragment.setOnEnumSelectorListener(action -> {
-            group.orders.get(index).action = action;
+        fragment.setOnEnumSelectorListener(actions -> {
+            group.orders.get(index).action = actions.iterator().next();
             adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount(), PAYLOAD_ACTION);
         });
         fragment.show(getChildFragmentManager(), EnumSelectorFragment.class.getSimpleName());
@@ -159,11 +157,6 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
         EnumSelectorFragment<FindRule> fragment = new EnumSelectorFragment<>(FindRule.class);
         fragment.setOnEnumSelectorListener(findRule -> {
             Order order = group.orders.get(index);
-            if(!order.action.isGlobalAction() && findRule == FindRule.DEVICE){
-                showNotAllowedFindRuleDialog();
-                return;
-            }
-            order.findRule = findRule;
             adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount(), PAYLOAD_FIND_RULE);
         });
         fragment.show(getChildFragmentManager(), EnumSelectorFragment.class.getSimpleName());
@@ -171,8 +164,8 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
 
     private void showNotFoundEventSelector(int index){
         EnumSelectorFragment<NotFoundEvent> fragment = new EnumSelectorFragment<>(NotFoundEvent.class);
-        fragment.setOnEnumSelectorListener(notFoundEvent -> {
-            group.orders.get(index).notFoundEvent = notFoundEvent;
+        fragment.setOnEnumSelectorListener(notFoundEvents -> {
+            group.orders.get(index).notFoundEvent = notFoundEvents.iterator().next();
             adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount(), PAYLOAD_NOT_FOUND_EVENT);
         });
         fragment.show(getChildFragmentManager(), EnumSelectorFragment.class.getSimpleName());

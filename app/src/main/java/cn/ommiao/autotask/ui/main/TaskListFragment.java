@@ -143,7 +143,6 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
 
     private Order getNewOrder(){
         Order order = new Order();
-        order.findRule = getRandomFindRule();
         order.notFoundEvent = NotFoundEvent.ERROR;
         order.action = Action.CLICK;
         order.repeatTimes = 1;
