@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 
 import cn.ommiao.autotask.R;
@@ -20,9 +20,9 @@ public class EnumListAdapter<E extends Enum> extends BaseQuickAdapter<BaseEnum<E
 
     public static final String PAYLOAD_SELECTED = "payload_selected";
 
-    private LinkedHashSet<BaseEnum<E>> selectedEnums;
+    private HashSet<BaseEnum<E>> selectedEnums;
 
-    public EnumListAdapter(int layoutResId, @Nullable List<BaseEnum<E>> data, LinkedHashSet<BaseEnum<E>> selectedEnums) {
+    public EnumListAdapter(int layoutResId, @Nullable List<BaseEnum<E>> data, HashSet<BaseEnum<E>> selectedEnums) {
         super(layoutResId, data);
         this.selectedEnums = selectedEnums;
         setOnItemChildClickListener(this);

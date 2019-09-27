@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FragmentEnumSelectorBinding;
@@ -32,10 +33,20 @@ public class EnumSelectorFragment<E extends Enum> extends DialogFragment {
     private Class<E> enumClass;
     private FragmentEnumSelectorBinding mBinding;
     private ArrayList<BaseEnum<E>> enums = new ArrayList<>();
-    private LinkedHashSet<E> selectedEnums = new LinkedHashSet<>();
+    private HashSet<E> selectedEnums = new HashSet<>();
 
-    public EnumSelectorFragment(Class<E> enumClass){
+    public EnumSelectorFragment(){
+
+    }
+
+    public EnumSelectorFragment(Class<E> enumClass, E selectedEnum){
         this.enumClass = enumClass;
+        this.selectedEnums.add(selectedEnum);
+    }
+
+    public EnumSelectorFragment(Class<E> enumClass, HashSet<E> selectedEnums){
+        this.enumClass = enumClass;
+        this.selectedEnums = selectedEnums;
     }
 
     @Nullable
@@ -96,6 +107,6 @@ public class EnumSelectorFragment<E extends Enum> extends DialogFragment {
     }
 
     public interface OnEnumSelectorListener<E>{
-        void onEnumSelected(LinkedHashSet<E> baseEnumSet);
+        void onEnumSelected(Set<E> baseEnumSet);
     }
 }

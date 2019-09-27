@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FooterOrderListBinding;
@@ -145,27 +146,30 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
     }
 
     private void showActionSelector(int index){
-        EnumSelectorFragment<Action> fragment = new EnumSelectorFragment<>(Action.class);
+        Order order = group.orders.get(index);
+        EnumSelectorFragment<Action> fragment = new EnumSelectorFragment<>(Action.class, order.action);
         fragment.setOnEnumSelectorListener(actions -> {
-            group.orders.get(index).action = actions.iterator().next();
+            order.action = actions.iterator().next();
             adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount(), PAYLOAD_ACTION);
         });
         fragment.show(getChildFragmentManager(), EnumSelectorFragment.class.getSimpleName());
     }
 
     private void showFindRuleSelector(int index){
-        EnumSelectorFragment<FindRule> fragment = new EnumSelectorFragment<>(FindRule.class);
+        Order order = group.orders.get(index);
+        HashSet<FindRule> findRules = new HashSet<>(order.uiInfo.findRules.keySet());
+        EnumSelectorFragment<FindRule> fragment = new EnumSelectorFragment<>(FindRule.class, findRules);
         fragment.setOnEnumSelectorListener(findRule -> {
-            Order order = group.orders.get(index);
             adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount(), PAYLOAD_FIND_RULE);
         });
         fragment.show(getChildFragmentManager(), EnumSelectorFragment.class.getSimpleName());
     }
 
     private void showNotFoundEventSelector(int index){
-        EnumSelectorFragment<NotFoundEvent> fragment = new EnumSelectorFragment<>(NotFoundEvent.class);
+        Order order = group.orders.get(index);
+        EnumSelectorFragment<NotFoundEvent> fragment = new EnumSelectorFragment<>(NotFoundEvent.class, order.notFoundEvent);
         fragment.setOnEnumSelectorListener(notFoundEvents -> {
-            group.orders.get(index).notFoundEvent = notFoundEvents.iterator().next();
+            order.notFoundEvent = notFoundEvents.iterator().next();
             adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount(), PAYLOAD_NOT_FOUND_EVENT);
         });
         fragment.show(getChildFragmentManager(), EnumSelectorFragment.class.getSimpleName());

@@ -1,8 +1,5 @@
 package cn.ommiao.autotask.ui.adapter;
 
-import android.view.View;
-import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -12,7 +9,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import cn.ommiao.autotask.R;
-import cn.ommiao.base.entity.order.FindRule;
 import cn.ommiao.base.entity.order.Order;
 
 public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
@@ -32,6 +28,7 @@ public class OrderListAdapter extends BaseQuickAdapter<Order, BaseViewHolder> {
         int no = pos + 1;
         holder.setText(R.id.tv_order_title, "指令" + no);
         holder.setText(R.id.tv_action, order.action.getDescription());
+        holder.setText(R.id.tv_not_found_event, order.notFoundEvent.getDescription());
         holder.setText(R.id.et_repeat_times, String.valueOf(order.repeatTimes));
         holder.setText(R.id.et_delay, String.valueOf(order.delay));
         holder.addOnClickListener(R.id.iv_remove_order, R.id.tv_action, R.id.tv_find_rule, R.id.tv_not_found_event);
