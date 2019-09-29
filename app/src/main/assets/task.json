@@ -1,11 +1,91 @@
 {
-  "taskName": "收能量",
-  "taskDescription": "一键收取支付宝能量",
   "groups": [
     {
-      "groupName": "指令组test",
-      "repeatTimes": 1,
-      "orders": []
+      "groupName": "指令组1",
+      "orders": [
+        {
+          "action": "HOME",
+          "delay": 0,
+          "executeParams": {},
+          "notFoundEvent": "ERROR",
+          "repeatTimes": 1,
+          "timeout": 0,
+          "uiInfo": {
+            "findRules": {
+              "TEXT": "支付宝"
+            }
+          }
+        },
+        {
+          "action": "CLICK",
+          "delay": 500,
+          "executeParams": {},
+          "notFoundEvent": "ERROR",
+          "repeatTimes": 1,
+          "timeout": 0,
+          "uiInfo": {
+            "findRules": {
+              "TEXT": "支付宝"
+            }
+          }
+        },
+        {
+          "action": "CLICK",
+          "delay": 500,
+          "executeParams": {},
+          "notFoundEvent": "ERROR",
+          "repeatTimes": 1,
+          "timeout": 0,
+          "uiInfo": {
+            "findRules": {
+              "ID": "com.alipay.android.phone.openplatform:id/more_app_text"
+            }
+          }
+        },
+        {
+          "action": "CLICK",
+          "delay": 1000,
+          "executeParams": {},
+          "notFoundEvent": "ERROR",
+          "repeatTimes": 1,
+          "timeout": 0,
+          "uiInfo": {
+            "findRules": {
+              "TEXT": "蚂蚁森林"
+            }
+          }
+        },
+        {
+          "action": "CLICK",
+          "delay": 100,
+          "executeParams": {},
+          "notFoundEvent": "ERROR",
+          "repeatTimes": 0,
+          "timeout": 2000,
+          "uiInfo": {
+            "findRules": {
+              "TEXT_CONTAINS": "收集能量"
+            }
+          }
+        },
+        {
+          "action": "BACK",
+          "delay": 0,
+          "executeParams": {},
+          "notFoundEvent": "ERROR",
+          "repeatTimes": 3,
+          "timeout": 0,
+          "uiInfo": {
+            "findRules": {}
+          }
+        }
+      ],
+      "repeatTimes": 1
     }
-  ]
+  ],
+  "taskCoverColor": 0,
+  "taskDescription": "收入能量！",
+  "taskDescriptionColor": 0,
+  "taskName": "支付宝能量新",
+  "taskNameColor": 0
 }
