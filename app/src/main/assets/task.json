@@ -5,65 +5,7 @@
     {
       "groupName": "指令组test",
       "repeatTimes": 1,
-      "orders": [
-        {
-          "findRule": "DEVICE",
-          "action": "HOME",
-          "delay": 1000,
-          "repeatTimes": 1,
-          "uiInfo": {},
-          "notFoundEvent": "ERROR"
-        },
-        {
-          "findRule": "TEXT",
-          "action": "CLICK",
-          "delay": 1000,
-          "repeatTimes": 1,
-          "uiInfo": {
-            "text": "支付宝"
-          },
-          "notFoundEvent": "ERROR"
-        },
-        {
-          "findRule": "ID",
-          "action": "CLICK",
-          "delay": 1000,
-          "repeatTimes": 1,
-          "uiInfo": {
-            "id": "com.alipay.android.phone.openplatform:id/more_app_text"
-          },
-          "notFoundEvent": "ERROR"
-        },
-        {
-          "findRule": "TEXT",
-          "action": "CLICK",
-          "delay": 1000,
-          "repeatTimes": 1,
-          "uiInfo": {
-            "text": "蚂蚁森林"
-          },
-          "notFoundEvent": "ERROR"
-        },
-        {
-          "findRule": "TEXT_CONTAINS",
-          "action": "CLICK",
-          "delay": 800,
-          "repeatTimes": 0,
-          "timeout": 2000,
-          "uiInfo": {
-            "text": "收集能量"
-          },
-          "notFoundEvent": "ERROR"
-        },
-        {
-          "findRule": "DEVICE",
-          "action": "BACK",
-          "delay": 1000,
-          "repeatTimes": 3,
-          "uiInfo": {},
-          "notFoundEvent": "ERROR"
-        }
-      ]
+      "orders": []
     }
   ]
 }

@@ -114,7 +114,8 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
     }
 
     private boolean isPreChecked() {
-        for (Group group : task.groups) {
+        for (int i = 0; i < task.groups.size(); i++) {
+            Group group = task.groups.get(i);
             if(group.orders == null || group.orders.size() == 0){
                 String msg = group.groupName + "不包含任何指令，请检查。";
                 new CustomDialogFragment()
@@ -126,6 +127,10 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
                         })
                         .show(getChildFragmentManager());
                 return false;
+            } else {
+                if(!fragments.get(i).saveAllData()){
+                    return false;
+                }
             }
         }
         return true;

@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FooterOrderListBinding;
@@ -19,18 +21,22 @@ import cn.ommiao.autotask.databinding.HeaderOrderListBinding;
 import cn.ommiao.autotask.ui.adapter.OrderListAdapter;
 import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.common.CustomDialogFragment;
+import cn.ommiao.autotask.util.ToastUtil;
 import cn.ommiao.base.entity.order.Action;
 import cn.ommiao.base.entity.order.FindRule;
 import cn.ommiao.base.entity.order.Group;
 import cn.ommiao.base.entity.order.NotFoundEvent;
 import cn.ommiao.base.entity.order.Order;
 import cn.ommiao.base.entity.order.UiInfo;
+import cn.ommiao.base.findrulehelper.BaseFindRuleHelper;
 import cn.ommiao.base.util.StringUtil;
 
 import static cn.ommiao.autotask.ui.adapter.OrderListAdapter.PAYLOAD_ACTION;
 import static cn.ommiao.autotask.ui.adapter.OrderListAdapter.PAYLOAD_FIND_RULE;
+import static cn.ommiao.autotask.ui.adapter.OrderListAdapter.PAYLOAD_FIND_RULE_PARENT;
 import static cn.ommiao.autotask.ui.adapter.OrderListAdapter.PAYLOAD_NOT_FOUND_EVENT;
 import static cn.ommiao.autotask.ui.adapter.OrderListAdapter.PAYLOAD_TITLE;
+import static cn.ommiao.autotask.ui.adapter.OrderListAdapter.PAYLOAD_UIINFO_P_SHOW;
 
 public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewModel> implements BaseQuickAdapter.OnItemChildClickListener {
 
@@ -53,9 +59,32 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
             rTimes = "1";
         }
         group.repeatTimes = Integer.parseInt(rTimes);
-        for (Order order : group.orders) {
+    }
 
+    public boolean saveAllData(){
+        saveData();
+        for (int i = 0; i < group.orders.size(); i++) {
+            Order order = group.orders.get(i);
+            for (FindRule findRule : order.uiInfo.findRules.keySet()) {
+                String validMsg = findRule.getFindRuleHelper().isDataValid(order.uiInfo.views.get(findRule));
+                if(!BaseFindRuleHelper.DATA_VALID.equals(validMsg)){
+                    ToastUtil.shortToast(group.groupName + "中指令" + (i + 1) + "控件信息录入错误：" + validMsg);
+                    return false;
+                }
+                findRule.getFindRuleHelper().save(order.uiInfo.views.get(findRule), order.uiInfo);
+            }
+            if(order.uiInfo.parent != null){
+                for (FindRule findRule : order.uiInfo.parent.findRules.keySet()) {
+                    String validMsg = findRule.getFindRuleHelper().isDataValid(order.uiInfo.parent.views.get(findRule));
+                    if(!BaseFindRuleHelper.DATA_VALID.equals(validMsg)){
+                        ToastUtil.shortToast(group.groupName + "中指令" + (i + 1) + "父控件信息录入错误：" + validMsg);
+                        return false;
+                    }
+                    findRule.getFindRuleHelper().save(order.uiInfo.parent.views.get(findRule), order.uiInfo.parent);
+                }
+            }
         }
+        return true;
     }
 
     @Override
@@ -119,6 +148,7 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
         order.repeatTimes = 1;
         order.action = Action.CLICK;
         order.uiInfo = new UiInfo();
+        order.uiInfo.findRules.put(FindRule.ID, "");
         order.notFoundEvent = NotFoundEvent.ERROR;
         return order;
     }
@@ -136,11 +166,24 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
                 break;
             case R.id.tv_find_rule:
                 if(!group.orders.get(i).action.isGlobalAction()){
-                    showFindRuleSelector(i);
+                    showFindRuleSelector(i, false);
                 }
+                break;
+            case R.id.tv_find_rule_p:
+                showFindRuleSelector(i, true);
                 break;
             case R.id.tv_not_found_event:
                 showNotFoundEventSelector(i);
+                break;
+            case R.id.tv_uiinfo_parent:
+                Order order = group.orders.get(i);
+                if(order.uiInfo.parent == null){
+                    order.uiInfo.parent = new UiInfo();
+                    order.uiInfo.parent.findRules.put(FindRule.ID, "");
+                } else {
+                    order.uiInfo.parent = null;
+                }
+                adapter.notifyItemChanged(i + adapter.getHeaderLayoutCount(), PAYLOAD_UIINFO_P_SHOW);
                 break;
         }
     }
@@ -155,12 +198,22 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
         fragment.show(getChildFragmentManager(), EnumSelectorFragment.class.getSimpleName());
     }
 
-    private void showFindRuleSelector(int index){
+    private void showFindRuleSelector(int index, boolean isParent){
         Order order = group.orders.get(index);
-        HashSet<FindRule> findRules = new HashSet<>(order.uiInfo.findRules.keySet());
-        EnumSelectorFragment<FindRule> fragment = new EnumSelectorFragment<>(FindRule.class, findRules);
-        fragment.setOnEnumSelectorListener(findRule -> {
-            adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount(), PAYLOAD_FIND_RULE);
+        HashSet<FindRule> findRulesNow;
+        if(isParent){
+            findRulesNow = new HashSet<>(order.uiInfo.parent.findRules.keySet());
+        } else {
+            findRulesNow = new HashSet<>(order.uiInfo.findRules.keySet());
+        }
+        EnumSelectorFragment<FindRule> fragment = new EnumSelectorFragment<>(FindRule.class, findRulesNow);
+        fragment.setOnEnumSelectorListener(findRules -> {
+            HashMap<FindRule, String> findRulesMap = isParent ? order.uiInfo.parent.findRules : order.uiInfo.findRules;
+            findRulesMap.clear();
+            for (FindRule findRule : findRules) {
+                findRulesMap.put(findRule, "");
+            }
+            adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount(), isParent ? PAYLOAD_FIND_RULE_PARENT : PAYLOAD_FIND_RULE);
         });
         fragment.show(getChildFragmentManager(), EnumSelectorFragment.class.getSimpleName());
     }

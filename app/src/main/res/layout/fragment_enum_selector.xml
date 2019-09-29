@@ -50,6 +50,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:scrollbarThumbVertical="@drawable/shape_scroll_bar"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbarSize="4dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="vertical"
                 tools:listitem="@layout/item_enum_list"
                 tools:itemCount="3"/>
 

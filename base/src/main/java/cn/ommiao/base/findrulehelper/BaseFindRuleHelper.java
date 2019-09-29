@@ -12,14 +12,13 @@ import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.UiSelector;
 
 import cn.ommiao.base.entity.order.FindRule;
-import cn.ommiao.base.entity.order.Order;
 import cn.ommiao.base.entity.order.UiInfo;
 
 public abstract class BaseFindRuleHelper {
 
     public static final String DATA_VALID = "Data valid.";
 
-    public View getFindRuleView(Context context){
+    public @NonNull View getFindRuleView(Context context){
         return LayoutInflater.from(context).inflate(getLayoutId(), null);
     }
 

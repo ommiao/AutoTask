@@ -71,6 +71,9 @@ public class EnumListAdapter<E extends Enum> extends BaseQuickAdapter<BaseEnum<E
             }
             selectedEnums.add(baseEnum);
             notifyItemChanged(i, PAYLOAD_SELECTED);
+        } else {
+            selectedEnums.remove(baseEnum);
+            notifyItemChanged(i, PAYLOAD_SELECTED);
         }
     }
 
