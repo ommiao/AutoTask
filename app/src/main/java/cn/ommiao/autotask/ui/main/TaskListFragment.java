@@ -119,6 +119,11 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         addFragmentToBackStack(R.id.container, fragment);
     }
 
+    private void startFragmentTaskEdit(Task task) {
+        TaskAddFragment fragment = new TaskAddFragment(task);
+        addFragmentToBackStack(R.id.container, fragment);
+    }
+
     private Task getTask(){
 //        Task task = new Task();
 //        task.groups = new ArrayList<>();
@@ -135,6 +140,8 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
 //        return task;
 //        return Task.fromJson(OrderUtil.readOrders(mContext), Task.class);
         Task task = new Task();
+        task.taskName = "新任务";
+        task.taskDescription = "";
         task.groups = new ArrayList<>();
         Group group = new Group();
         group.groupName = "指令组1";
@@ -169,8 +176,13 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         });
         mViewModel.getNewTask().observe(mContext, newTask -> {
             if(newTask != null){
-                tasks.add(newTask);
-                adapter.notifyItemInserted(tasks.size() - 1 + adapter.getHeaderLayoutCount());
+                int index = mViewModel.getIndexByTaskId(newTask.taskId);
+                if(index == -1){
+                    tasks.add(newTask);
+                    adapter.notifyItemInserted(tasks.size() - 1 + adapter.getHeaderLayoutCount());
+                } else {
+                    adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount());
+                }
             }
         });
     }
@@ -204,6 +216,7 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
                 }
                 break;
             case R.id.fl_edit:
+                startFragmentTaskEdit(tasks.get(position));
                 break;
             case R.id.fl_delete:
                 tasks.remove(position);

@@ -31,10 +31,26 @@ public class MainViewModel extends ViewModel {
 
     public void addNewTask(Task task){
         newTask.setValue(task);
-
+        if(taskLiveData.getValue() != null){
+            taskLiveData.getValue().add(task);
+        }
     }
 
     public MutableLiveData<Task> getNewTask() {
         return newTask;
+    }
+
+    public int getIndexByTaskId(String taskId){
+        int index = -1;
+        ArrayList<Task> tasks = taskLiveData.getValue();
+        if(tasks != null){
+            for (int i = 0; i < tasks.size(); i++) {
+                if(taskId.equals(tasks.get(i).taskId)){
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
     }
 }

@@ -65,22 +65,34 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, MainViewMo
         saveData();
         for (int i = 0; i < group.orders.size(); i++) {
             Order order = group.orders.get(i);
+            if(order.action.isGlobalAction()){
+                order.uiInfo.findRules.clear();
+                order.uiInfo.parent = null;
+            }
             for (FindRule findRule : order.uiInfo.findRules.keySet()) {
-                String validMsg = findRule.getFindRuleHelper().isDataValid(order.uiInfo.views.get(findRule));
+                View view = order.uiInfo.views.get(findRule);
+                if(view == null){
+                    continue;
+                }
+                String validMsg = findRule.getFindRuleHelper().isDataValid(view);
                 if(!BaseFindRuleHelper.DATA_VALID.equals(validMsg)){
                     ToastUtil.shortToast(group.groupName + "中指令" + (i + 1) + "控件信息录入错误：" + validMsg);
                     return false;
                 }
-                findRule.getFindRuleHelper().save(order.uiInfo.views.get(findRule), order.uiInfo);
+                findRule.getFindRuleHelper().save(view, order.uiInfo);
             }
             if(order.uiInfo.parent != null){
                 for (FindRule findRule : order.uiInfo.parent.findRules.keySet()) {
-                    String validMsg = findRule.getFindRuleHelper().isDataValid(order.uiInfo.parent.views.get(findRule));
+                    View view = order.uiInfo.parent.views.get(findRule);
+                    if(view == null){
+                        continue;
+                    }
+                    String validMsg = findRule.getFindRuleHelper().isDataValid(view);
                     if(!BaseFindRuleHelper.DATA_VALID.equals(validMsg)){
                         ToastUtil.shortToast(group.groupName + "中指令" + (i + 1) + "父控件信息录入错误：" + validMsg);
                         return false;
                     }
-                    findRule.getFindRuleHelper().save(order.uiInfo.parent.views.get(findRule), order.uiInfo.parent);
+                    findRule.getFindRuleHelper().save(view, order.uiInfo.parent);
                 }
             }
         }

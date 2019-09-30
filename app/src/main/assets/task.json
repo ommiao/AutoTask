@@ -11,9 +11,7 @@
           "repeatTimes": 1,
           "timeout": 0,
           "uiInfo": {
-            "findRules": {
-              "TEXT": "支付宝"
-            }
+            "findRules": {}
           }
         },
         {
@@ -86,6 +84,7 @@
   "taskCoverColor": 0,
   "taskDescription": "收入能量！",
   "taskDescriptionColor": 0,
+  "taskId": "template",
   "taskName": "支付宝能量新",
   "taskNameColor": 0
 }

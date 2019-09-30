@@ -10,6 +10,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.UUID;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FragmentTaskAddBinding;
@@ -18,6 +19,7 @@ import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.common.CustomDialogFragment;
 import cn.ommiao.base.entity.order.Group;
 import cn.ommiao.base.entity.order.Task;
+import cn.ommiao.base.util.StringUtil;
 
 public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainViewModel> implements GroupFragment.OnGroupRemoveListener, ViewPager.OnPageChangeListener {
 
@@ -68,7 +70,7 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
         if(task.groups.size() >= 15){
             new CustomDialogFragment()
                     .title("提示")
-                    .content("指令组达到上限，请勿继续添加。")
+                    .content("指令组达到上限，无法继续添加。")
                     .rightBtn("确定")
                     .onRightClick(() -> {
 
@@ -92,12 +94,15 @@ public class TaskAddFragment extends BaseFragment<FragmentTaskAddBinding, MainVi
 
     private void saveTask(){
         if(isPreChecked()){
-            TaskSaveDialogFragment saveDialogFragment = new TaskSaveDialogFragment();
+            TaskSaveDialogFragment saveDialogFragment = new TaskSaveDialogFragment(task.taskName, task.taskDescription);
             saveDialogFragment.setOnTaskSaveListener(new TaskSaveDialogFragment.OnTaskSaveListener() {
                 @Override
                 public void onTaskSaveConfirm(String taskName, String taskDescription) {
                     task.taskName = taskName;
                     task.taskDescription = taskDescription;
+                    if(StringUtil.isEmptyOrSpace(task.taskId)){
+                        task.taskId = UUID.randomUUID().toString();
+                    }
                     Logger.d(task.toJson());
                     mViewModel.addNewTask(task);
                     ImmersionBar.with(TaskAddFragment.this).statusBarDarkFont(true).init();

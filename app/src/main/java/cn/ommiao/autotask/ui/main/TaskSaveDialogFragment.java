@@ -26,6 +26,15 @@ public class TaskSaveDialogFragment extends DialogFragment {
     private FragmentTaskSaveDialogBinding mBinding;
     private String taskName, taskDescription;
 
+    public TaskSaveDialogFragment(){
+
+    }
+
+    public TaskSaveDialogFragment(String taskName, String taskDescription){
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,6 +44,8 @@ public class TaskSaveDialogFragment extends DialogFragment {
     }
 
     private void initViews() {
+        mBinding.etTaskName.setText(taskName);
+        mBinding.etTaskDescription.setText(taskDescription);
         mBinding.ivClose.setOnClickListener(view -> {
             if(onTaskSaveListener != null){
                 onTaskSaveListener.onTaskSaveCancel();
