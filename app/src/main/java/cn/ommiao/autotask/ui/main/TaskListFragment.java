@@ -37,7 +37,7 @@ import cn.ommiao.base.entity.order.Order;
 import cn.ommiao.base.entity.order.Task;
 import cn.ommiao.base.util.FileUtil;
 
-public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, MainViewModel> implements BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener {
+public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, MainViewModel> implements BaseQuickAdapter.OnItemChildClickListener {
 
     private ArrayList<Task> tasks = new ArrayList<>();
 
@@ -99,16 +99,19 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         View header = LayoutInflater.from(mContext).inflate(R.layout.header_task_list, null);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) header.findViewById(R.id.v_status_bar).getLayoutParams();
         icon = header.findViewById(R.id.iv_status);
+        header.findViewById(R.id.tv_title).setOnLongClickListener(view -> stopClient());
         layoutParams.height = ImmersionBar.getStatusBarHeight(this);
         View footer = LayoutInflater.from(mContext).inflate(R.layout.footer_task_list, null);
         adapter.addHeaderView(header);
         adapter.addFooterView(footer);
-        adapter.setOnItemClickListener(this);
         adapter.setOnItemChildClickListener(this);
         mBinding.rvTask.setAdapter(adapter);
-        mBinding.fabAdd.setOnClickListener(view -> {
-            startFragmentTaskAdd();
-        });
+        mBinding.fabAdd.setOnClickListener(view -> startFragmentTaskAdd());
+    }
+
+    private boolean stopClient() {
+        client.send(Client.STOP);
+        return true;
     }
 
     private void startFragmentTaskAdd() {
@@ -207,11 +210,6 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
                 adapter.notifyItemRemoved(position + 1);
                 break;
         }
-    }
-
-    @Override
-    public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
-        Toast.makeText(mContext, tasks.get(position).taskName, Toast.LENGTH_SHORT).show();
     }
 
     private void switchToSuccess(){

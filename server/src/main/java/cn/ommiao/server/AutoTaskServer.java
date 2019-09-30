@@ -20,8 +20,7 @@ public class AutoTaskServer {
 
     private byte[] messageRec = new byte[1024];
 
-    @SuppressWarnings("InfiniteLoopStatement")
-    public AutoTaskServer() {
+    private AutoTaskServer() {
         try {
             datagramSocket = new DatagramSocket(PORT);
             datagramPacket = new DatagramPacket(messageRec, messageRec.length);
@@ -33,16 +32,11 @@ public class AutoTaskServer {
                     reply("@alive");
                     continue;
                 }
-                Process process = Runtime.getRuntime().exec(command.trim());
-                InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8);
-                BufferedReader reader = new BufferedReader(inputStreamReader);
-                String line;
-                reply("@output");
-                while ((line = reader.readLine()) != null){
-                    System.out.println(line);
-                    reply(line);
+                if(command.startsWith("@stop")){
+                    reply("@bye");
+                    break;
                 }
-                process.destroy();
+                new ExecuteThread(command).start();
                 reply("@ok");
             }
         } catch (IOException e) {
@@ -61,6 +55,31 @@ public class AutoTaskServer {
             datagramSocket.send(packet);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    class ExecuteThread extends Thread{
+
+        private String command;
+
+        private ExecuteThread(String command){
+            this.command = command;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Process process = Runtime.getRuntime().exec(command.trim());
+                InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8);
+                BufferedReader reader = new BufferedReader(inputStreamReader);
+                String line;
+                while ((line = reader.readLine()) != null){
+                    System.out.println(line);
+                }
+                process.destroy();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
 }
