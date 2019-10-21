@@ -1,17 +1,3 @@
 <resources>
     <string name="app_name">base</string>
-    <string name="findrule_device_tips">不查找控件，适用于Home、Back等全局操作以及按照屏幕坐标点击、滑动等，不需要录入控件信息。</string>
-    <string name="label_findrule_id">控件Id</string>
-    <string name="hint_input_id">请输入控件Id</string>
-    <string name="label_findrule_description">控件描述</string>
-    <string name="hint_input_description">请输入控件描述</string>
-    <string name="label_findrule_text">控件文字</string>
-    <string name="hint_input_text">请输入控件文字</string>
-    <string name="label_findrule_className">控件类名</string>
-    <string name="hint_input_className">请输入控件类名</string>
-    <string name="label_findrule_child_id">子控件Id</string>
-    <string name="label_findrule_parent_id">父控件Id</string>
-    <string name="label_findrule_child_text">子控件文字</string>
-    <string name="hint_input_child_text">请输入子控件文字</string>
-    <string name="hint_input_parent_id">请输入父控件Id</string>
 </resources>

@@ -10,7 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +19,6 @@ import com.gyf.immersionbar.ImmersionBar;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Random;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FragmentTaskListBinding;
@@ -29,11 +27,6 @@ import cn.ommiao.autotask.ui.adapter.TaskListAdapter;
 import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.common.CustomDialogFragment;
 import cn.ommiao.autotask.util.UiUtil;
-import cn.ommiao.base.entity.order.Action;
-import cn.ommiao.base.entity.order.FindRule;
-import cn.ommiao.base.entity.order.Group;
-import cn.ommiao.base.entity.order.NotFoundEvent;
-import cn.ommiao.base.entity.order.Order;
 import cn.ommiao.base.entity.order.Task;
 import cn.ommiao.base.util.FileUtil;
 
@@ -106,63 +99,14 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         adapter.addFooterView(footer);
         adapter.setOnItemChildClickListener(this);
         mBinding.rvTask.setAdapter(adapter);
-        mBinding.fabAdd.setOnClickListener(view -> startFragmentTaskAdd());
+        mBinding.fabAdd.setOnClickListener(view -> {
+
+        });
     }
 
     private boolean stopClient() {
         client.send(Client.STOP);
         return true;
-    }
-
-    private void startFragmentTaskAdd() {
-        TaskAddFragment fragment = new TaskAddFragment(getTask());
-        addFragmentToBackStack(R.id.container, fragment);
-    }
-
-    private void startFragmentTaskEdit(Task task) {
-        TaskAddFragment fragment = new TaskAddFragment(task);
-        addFragmentToBackStack(R.id.container, fragment);
-    }
-
-    private Task getTask(){
-//        Task task = new Task();
-//        task.groups = new ArrayList<>();
-//        Group group1 = new Group();
-//        group1.groupName = "指令组1";
-//        group1.repeatTimes = 1;
-//        group1.addOrder(getNewOrder());
-//        group1.addOrder(getNewOrder());
-//        Group group2 = new Group();
-//        group2.groupName = "指令组2";
-//        group2.repeatTimes = 1;
-//        task.groups.add(group1);
-//        task.groups.add(group2);
-//        return task;
-//        return Task.fromJson(OrderUtil.readOrders(mContext), Task.class);
-        Task task = new Task();
-        task.taskName = "新任务";
-        task.taskDescription = "";
-        task.groups = new ArrayList<>();
-        Group group = new Group();
-        group.groupName = "指令组1";
-        group.repeatTimes = 1;
-        group.orders = new ArrayList<>();
-        task.groups.add(group);
-        return task;
-    }
-
-    private Order getNewOrder(){
-        Order order = new Order();
-        order.notFoundEvent = NotFoundEvent.ERROR;
-        order.action = Action.CLICK;
-        order.repeatTimes = 1;
-        order.delay = 1000;
-        return order;
-    }
-
-    private FindRule getRandomFindRule(){
-        int r = new Random().nextInt(FindRule.values().length);
-        return FindRule.values()[r];
     }
 
     @Override
@@ -216,7 +160,7 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
                 }
                 break;
             case R.id.fl_edit:
-                startFragmentTaskEdit(tasks.get(position));
+
                 break;
             case R.id.fl_delete:
                 tasks.remove(position);

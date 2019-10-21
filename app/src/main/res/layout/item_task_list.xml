@@ -19,13 +19,6 @@
         android:src="@drawable/yhy"
         android:scaleType="centerCrop"/>
 
-    <ImageView
-        android:id="@+id/iv_mask"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/mask_cover"
-        tools:tint="@color/defaultTaskMask"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +32,7 @@
             android:textSize="@dimen/task_name_size"
             android:maxLines="1"
             android:ellipsize="end"
-            tools:textColor="@android:color/white"
+            android:textColor="@android:color/white"
             tools:text="QQ阅读"/>
 
         <TextView
@@ -50,7 +43,7 @@
             android:textSize="@dimen/task_desc_size"
             android:maxLines="1"
             android:ellipsize="end"
-            tools:textColor="@android:color/white"
+            android:textColor="@android:color/white"
             tools:text="qq阅读任务简介"/>
 
     </LinearLayout>
