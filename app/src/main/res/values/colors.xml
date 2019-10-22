@@ -6,4 +6,5 @@
     <color name="halfWhite">#99FFFFFF</color>
     <color name="colorWarningRed">#F65A56</color>
     <color name="defaultTaskMask">#17244E</color>
+    <color name="colorListDivider">#F1F1F1</color>
 </resources>

@@ -1,6 +1,5 @@
 package cn.ommiao.autotask.ui.common;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

@@ -3,4 +3,5 @@
     <string name="adb_command">adb shell sh /data/data/cn.ommiao.autotask/autotask.bash</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+    <string name="task_files_not_found">未检索到任务文件</string>
 </resources>

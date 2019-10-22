@@ -1,6 +1,9 @@
 package cn.ommiao.autotask.ui.main;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -16,21 +19,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.immersionbar.ImmersionBar;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import cn.ommiao.autotask.R;
 import cn.ommiao.autotask.databinding.FragmentTaskListBinding;
+import cn.ommiao.autotask.entity.TaskData;
 import cn.ommiao.autotask.task.Client;
 import cn.ommiao.autotask.ui.adapter.TaskListAdapter;
 import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.common.CustomDialogFragment;
+import cn.ommiao.autotask.util.AppDatabase;
+import cn.ommiao.autotask.util.AppExecutors;
+import cn.ommiao.autotask.util.ToastUtil;
 import cn.ommiao.autotask.util.UiUtil;
 import cn.ommiao.base.entity.order.Task;
 import cn.ommiao.base.util.FileUtil;
 
-public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, MainViewModel> implements BaseQuickAdapter.OnItemChildClickListener {
+import static cn.ommiao.autotask.util.Constant.AUTO_TASK_DIR;
+
+public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, MainViewModel> implements BaseQuickAdapter.OnItemChildClickListener, TaskImportFragment.OnTaskImportListener {
 
     private ArrayList<Task> tasks = new ArrayList<>();
 
@@ -47,6 +62,34 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
     private boolean run = true;
 
     private MyHandler handler = new MyHandler(this);
+
+    @Override
+    public void onTaskSelected(String taskPath) {
+        File file = new File(taskPath);
+        if(file.exists()){
+            String fileString = FileUtil.readTxtFromFile(taskPath);
+            Task task = Task.fromJson(fileString, Task.class);
+            if(task == null || task.groups == null || task.groups.size() == 0){
+                new CustomDialogFragment().content("任务文件无效，请检查。")
+                        .rightBtn("确定")
+                        .show(getFragmentManager());
+            } else {
+                tasks.add(task);
+                adapter.notifyItemInserted(tasks.size() - 1 + adapter.getHeaderLayoutCount());
+                TaskData taskData = new TaskData();
+                taskData.setUuid(UUID.randomUUID().toString());
+                taskData.setTaskName(task.taskName);
+                taskData.setTaskDescription(task.taskDescription);
+                taskData.setTaskString(fileString);
+                AppExecutors.getDiskIO().execute(() -> AppDatabase.getTaskDatabase().taskDao().insertTaskData(taskData));
+            }
+        }
+    }
+
+    @Override
+    public void onCanceled() {
+
+    }
 
     static class MyHandler extends Handler {
 
@@ -100,8 +143,59 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         adapter.setOnItemChildClickListener(this);
         mBinding.rvTask.setAdapter(adapter);
         mBinding.fabAdd.setOnClickListener(view -> {
-
+            showTaskImportFragment();
         });
+    }
+
+    private void showTaskImportFragment() {
+        if(haveStoragePermissions()){
+            TaskImportFragment taskImportFragment = new TaskImportFragment();
+            taskImportFragment.setOnTaskImportListener(this);
+            taskImportFragment.show(getFragmentManager());
+        } else {
+            showNoStoragePermissions();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(!haveStoragePermissions()){
+            new CustomDialogFragment().content("为了导入并存取任务数据，需要请求读写存储权限，本应用仅读写根目录/AutoTask文件夹。")
+                    .rightBtn("确定")
+                    .onRightClick(() -> {
+                        AndPermission.with(mContext).runtime().permission(Permission.Group.STORAGE).onGranted(permissions -> {
+                            if(permissions.size() == 2){
+                                makeDir();
+                            }
+                        }).onDenied(permissions -> {
+                            showNoStoragePermissions();
+                        }).start();
+                    }).show(getFragmentManager());
+        } else {
+            makeDir();
+        }
+    }
+
+    private void showNoStoragePermissions(){
+        new CustomDialogFragment().content("未获取到读写存储权限，无法读写任务数据。")
+                .rightBtn("确定")
+                .onRightClick(() -> {
+                    mContext.finish();
+                }).show(getFragmentManager());
+    }
+
+    private boolean haveStoragePermissions(){
+        return mContext.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && mContext.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void makeDir(){
+        File autoTaskDir = new File(AUTO_TASK_DIR);
+        if(!autoTaskDir.exists()){
+            autoTaskDir.mkdir();
+        }
     }
 
     private boolean stopClient() {
@@ -116,17 +210,6 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
                 this.tasks.addAll(tasks);
                 adapter.notifyDataSetChanged();
                 loaded = true;
-            }
-        });
-        mViewModel.getNewTask().observe(mContext, newTask -> {
-            if(newTask != null){
-                int index = mViewModel.getIndexByTaskId(newTask.taskId);
-                if(index == -1){
-                    tasks.add(newTask);
-                    adapter.notifyItemInserted(tasks.size() - 1 + adapter.getHeaderLayoutCount());
-                } else {
-                    adapter.notifyItemChanged(index + adapter.getHeaderLayoutCount());
-                }
             }
         });
     }

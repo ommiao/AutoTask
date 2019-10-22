@@ -59,4 +59,7 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0-beta05'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.facebook.rebound:rebound:0.3.8'
+    implementation 'com.yanzhenjie.permission:x:2.0.1'
+    implementation "androidx.room:room-runtime:2.2.0"
+    annotationProcessor "androidx.room:room-compiler:2.2.0"
 }
