@@ -1,5 +1,6 @@
 package cn.ommiao.base.entity.order;
 
+import cn.ommiao.base.entity.actionhelper.AmStartActionHelper;
 import cn.ommiao.base.entity.actionhelper.BaseActionHelper;
 import cn.ommiao.base.entity.actionhelper.ClickPositionActionHelper;
 import cn.ommiao.base.entity.actionhelper.ClickWidgetActionHelper;
@@ -13,6 +14,7 @@ public enum Action {
     , PRESS_BACK("全局返回", new PressBackActionHelper())
     , CLICK_WIDGET("点击控件", new ClickWidgetActionHelper())
     , CLICK_POSITION("点击坐标", new ClickPositionActionHelper())
+    , LAUNCH_APP("打开应用", new AmStartActionHelper())
     , FORCE_STOP("强制关闭应用", new ForceStopActionHelper())
     ;
 

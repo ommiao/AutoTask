@@ -27,7 +27,7 @@ public abstract class BaseActionHelper {
         return GLOBAL == getActionType();
     }
 
-    public abstract void performGlobalAction(UiDevice uiDevice) throws IOException;
+    public abstract void performGlobalAction(UiDevice uiDevice) throws IOException, SecurityException;
 
     public abstract void performWidgetAction(UiObject uiObject, UiObject2 uiObject2) throws UiObjectNotFoundException;
 

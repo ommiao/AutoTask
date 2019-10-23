@@ -117,6 +117,10 @@ public class FileUtil {
         {
             try
             {
+                File file = new File(filePath);
+                if(!file.exists()){
+                    return "";
+                }
                 FileInputStream inputStream = new FileInputStream(filePath);
                 byte[] buffer = new byte[1024];
                 int len = inputStream.read(buffer);

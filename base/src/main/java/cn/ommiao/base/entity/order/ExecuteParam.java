@@ -4,6 +4,7 @@ public enum ExecuteParam {
 
     POSITION,
     TARGET_PACKAGE,
+    START_ACTIVITY,
     DATA
 
 }

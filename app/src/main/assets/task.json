@@ -4,9 +4,12 @@
       "groupName": "指令组1",
       "orders": [
         {
-          "action": "HOME",
+          "action": "LAUNCH_APP",
           "delay": 0,
-          "executeParams": {},
+          "executeParams": {
+            "TARGET_PACKAGE": "com.eg.android.AlipayGphone",
+            "START_ACTIVITY": "com.eg.android.AlipayGphone.AlipayLogin"
+          },
           "notFoundEvent": "ERROR",
           "repeatTimes": 1,
           "timeout": 0,
@@ -15,20 +18,7 @@
           }
         },
         {
-          "action": "CLICK",
-          "delay": 500,
-          "executeParams": {},
-          "notFoundEvent": "ERROR",
-          "repeatTimes": 1,
-          "timeout": 0,
-          "uiInfo": {
-            "findRules": {
-              "TEXT": "支付宝"
-            }
-          }
-        },
-        {
-          "action": "CLICK",
+          "action": "CLICK_WIDGET",
           "delay": 500,
           "executeParams": {},
           "notFoundEvent": "ERROR",
@@ -41,7 +31,7 @@
           }
         },
         {
-          "action": "CLICK",
+          "action": "CLICK_WIDGET",
           "delay": 1000,
           "executeParams": {},
           "notFoundEvent": "ERROR",
@@ -54,7 +44,7 @@
           }
         },
         {
-          "action": "CLICK",
+          "action": "CLICK_WIDGET",
           "delay": 100,
           "executeParams": {},
           "notFoundEvent": "ERROR",
@@ -67,7 +57,7 @@
           }
         },
         {
-          "action": "BACK",
+          "action": "PRESS_BACK",
           "delay": 0,
           "executeParams": {},
           "notFoundEvent": "ERROR",
@@ -81,10 +71,7 @@
       "repeatTimes": 1
     }
   ],
-  "taskCoverColor": 0,
   "taskDescription": "收入能量！",
-  "taskDescriptionColor": 0,
   "taskId": "template",
-  "taskName": "支付宝能量新",
-  "taskNameColor": 0
+  "taskName": "支付宝能量新"
 }

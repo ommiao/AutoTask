@@ -5,7 +5,6 @@ import androidx.test.uiautomator.UiDevice;
 import java.io.IOException;
 
 import cn.ommiao.base.entity.order.ExecuteParam;
-import cn.ommiao.base.entity.order.Order;
 
 public class ForceStopActionHelper extends BaseGlobalActionHelper {
 
