@@ -1,44 +1,39 @@
 package cn.ommiao.base.entity.order;
 
-public enum Action implements BaseEnum<Action> {
+import cn.ommiao.base.entity.actionhelper.BaseActionHelper;
+import cn.ommiao.base.entity.actionhelper.ClickPositionActionHelper;
+import cn.ommiao.base.entity.actionhelper.ClickWidgetActionHelper;
+import cn.ommiao.base.entity.actionhelper.ForceStopActionHelper;
+import cn.ommiao.base.entity.actionhelper.PressBackActionHelper;
+import cn.ommiao.base.entity.actionhelper.PressHomeActionHelper;
 
-      HOME("回到桌面", true)
-    , BACK("全局返回", true)
-    , CLICK("点击控件", false)
-    , CLICK_POSITION("点击坐标", true)
-    , FORCE_STOP("强制关闭应用", true)
+public enum Action {
+
+      PRESS_HOME("回到桌面", new PressHomeActionHelper())
+    , PRESS_BACK("全局返回", new PressBackActionHelper())
+    , CLICK_WIDGET("点击控件", new ClickWidgetActionHelper())
+    , CLICK_POSITION("点击坐标", new ClickPositionActionHelper())
+    , FORCE_STOP("强制关闭应用", new ForceStopActionHelper())
     ;
 
       private String description;
-      private boolean isGlobalAction;
+      private BaseActionHelper actionHelper;
 
-      Action(String description, boolean isGlobalAction){
+      Action(String description, BaseActionHelper actionHelper){
           this.description = description;
-          this.isGlobalAction = isGlobalAction;
+          this.actionHelper = actionHelper;
       }
 
 
-    @Override
-    public String getTitle() {
-        return "执行动作";
-    }
-
-    @Override
     public String getDescription() {
         return description;
     }
 
-    @Override
     public Action getEnum() {
         return this;
     }
 
-    @Override
-    public EnumGroup getEnumGroup() {
-        return EnumGroup.ACTION;
-    }
-
-    public boolean isGlobalAction() {
-        return isGlobalAction;
+    public BaseActionHelper getActionHelper() {
+        return actionHelper;
     }
 }
