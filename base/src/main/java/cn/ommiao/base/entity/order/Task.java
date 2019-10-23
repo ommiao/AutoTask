@@ -9,5 +9,6 @@ public class Task extends JavaBean {
     public String taskId;
     public String taskName, taskDescription;
     public ArrayList<Group> groups;
+    public String taskVersion;
 
 }

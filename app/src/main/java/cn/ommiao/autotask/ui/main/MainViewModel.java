@@ -14,7 +14,6 @@ import cn.ommiao.base.entity.order.Task;
 public class MainViewModel extends ViewModel {
 
     private MutableLiveData<ArrayList<Task>> taskLiveData = new MutableLiveData<>();
-    private MutableLiveData<Task> newTask = new MutableLiveData<>();
 
     public MutableLiveData<ArrayList<Task>> getTasks(){
         loadTasks();

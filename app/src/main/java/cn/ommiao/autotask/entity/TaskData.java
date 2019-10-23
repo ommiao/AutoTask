@@ -10,7 +10,7 @@ public class TaskData {
 
     @PrimaryKey
     private @NonNull
-    String uuid = "ommiao";
+    String taskId = "ommiao";
 
     @ColumnInfo
     private String taskName;
@@ -21,12 +21,24 @@ public class TaskData {
     @ColumnInfo
     private String taskString;
 
-    public String getUuid() {
-        return uuid;
+    @ColumnInfo
+    private String taskVersion = "1.0.0";
+
+    @NonNull
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setTaskId(@NonNull String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getTaskVersion() {
+        return taskVersion;
+    }
+
+    public void setTaskVersion(String taskVersion) {
+        this.taskVersion = taskVersion;
     }
 
     public String getTaskName() {

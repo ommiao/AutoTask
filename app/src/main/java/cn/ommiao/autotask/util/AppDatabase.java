@@ -12,7 +12,7 @@ public class AppDatabase {
     public static TaskDatabase getTaskDatabase(){
         if(db == null){
             db = Room.databaseBuilder(App.getContext(),
-                    TaskDatabase.class, "task_database").build();
+                    TaskDatabase.class, "task.db").build();
         }
         return db;
     }

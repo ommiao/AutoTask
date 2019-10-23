@@ -3,7 +3,6 @@ package cn.ommiao.autotask.ui.main;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -19,14 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.immersionbar.ImmersionBar;
-import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import cn.ommiao.autotask.R;
@@ -38,10 +35,10 @@ import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.common.CustomDialogFragment;
 import cn.ommiao.autotask.util.AppDatabase;
 import cn.ommiao.autotask.util.AppExecutors;
-import cn.ommiao.autotask.util.ToastUtil;
 import cn.ommiao.autotask.util.UiUtil;
 import cn.ommiao.base.entity.order.Task;
 import cn.ommiao.base.util.FileUtil;
+import cn.ommiao.base.util.StringUtil;
 
 import static cn.ommiao.autotask.util.Constant.AUTO_TASK_DIR;
 
@@ -74,13 +71,17 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
                         .rightBtn("确定")
                         .show(getFragmentManager());
             } else {
+                task.taskId = UUID.randomUUID().toString();
                 tasks.add(task);
                 adapter.notifyItemInserted(tasks.size() - 1 + adapter.getHeaderLayoutCount());
                 TaskData taskData = new TaskData();
-                taskData.setUuid(UUID.randomUUID().toString());
+                taskData.setTaskId(task.taskId);
                 taskData.setTaskName(task.taskName);
                 taskData.setTaskDescription(task.taskDescription);
-                taskData.setTaskString(fileString);
+                if(!StringUtil.isEmptyOrSpace(task.taskVersion)){
+                    taskData.setTaskVersion(task.taskVersion);
+                }
+                taskData.setTaskString(task.toJson());
                 AppExecutors.getDiskIO().execute(() -> AppDatabase.getTaskDatabase().taskDao().insertTaskData(taskData));
             }
         }
@@ -236,9 +237,6 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
                             .title("提示")
                             .content("Server is not running.")
                             .rightBtn("确定")
-                            .onRightClick(() -> {
-
-                            })
                             .show(getChildFragmentManager());
                 }
                 break;
@@ -246,8 +244,12 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
 
                 break;
             case R.id.fl_delete:
+                String taskId = tasks.get(position).taskId;
                 tasks.remove(position);
                 adapter.notifyItemRemoved(position + 1);
+                AppExecutors.getDiskIO().execute(() -> {
+                    AppDatabase.getTaskDatabase().taskDao().deleteTask(taskId);
+                });
                 break;
         }
     }
