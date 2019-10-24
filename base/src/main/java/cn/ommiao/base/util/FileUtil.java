@@ -63,10 +63,6 @@ public class FileUtil {
         writeTxtToFile(ORDER_DIR + "/task.json", taskJson);
     }
 
-    public static void writeExecuteResult(String executeResult){
-        writeTxtToFile(ORDER_DIR + "/result.json", executeResult);
-    }
-
     public static void writeTxtToFile(String filePath, String content)
     {
         FileOutputStream fos = null;

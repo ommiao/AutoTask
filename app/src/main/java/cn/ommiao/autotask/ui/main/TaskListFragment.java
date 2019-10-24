@@ -2,7 +2,10 @@ package cn.ommiao.autotask.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -14,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.immersionbar.ImmersionBar;
+import com.orhanobut.logger.Logger;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
@@ -27,22 +32,33 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import cn.ommiao.autotask.R;
+import cn.ommiao.autotask.core.App;
 import cn.ommiao.autotask.databinding.FragmentTaskListBinding;
+import cn.ommiao.autotask.entity.ExecuteResultData;
 import cn.ommiao.autotask.entity.TaskData;
 import cn.ommiao.autotask.task.Client;
+import cn.ommiao.autotask.ui.MainActivity;
 import cn.ommiao.autotask.ui.adapter.TaskListAdapter;
 import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.common.CustomDialogFragment;
 import cn.ommiao.autotask.util.AppDatabase;
 import cn.ommiao.autotask.util.AppExecutors;
+import cn.ommiao.autotask.util.ToastUtil;
 import cn.ommiao.autotask.util.UiUtil;
 import cn.ommiao.base.entity.order.Task;
 import cn.ommiao.base.util.FileUtil;
 import cn.ommiao.base.util.StringUtil;
 
 import static cn.ommiao.autotask.util.Constant.AUTO_TASK_DIR;
+import static cn.ommiao.base.util.Constant.URI_EXECUTE_RESULT;
 
 public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, MainViewModel> implements BaseQuickAdapter.OnItemChildClickListener, TaskImportFragment.OnTaskImportListener {
+
+    private static final int MSG_CLIENT_CONNECTED = 1;
+
+    private static final int MSG_CLIENT_DISCONNECTED = 2;
+
+    private static final int MSG_EXECUTE_FINISHED = 0;
 
     private ArrayList<Task> tasks = new ArrayList<>();
 
@@ -59,6 +75,8 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
     private boolean run = true;
 
     private MyHandler handler = new MyHandler(this);
+
+    private TaskResultContentObserver taskResultContentObserver;
 
     @Override
     public void onTaskSelected(String taskPath) {
@@ -103,17 +121,20 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         @Override
         public void handleMessage(@NonNull Message msg) {
             TaskListFragment fragment = mFragment.get();
-            if (fragment != null && msg.what == 1){
+            if (fragment != null && msg.what == MSG_CLIENT_CONNECTED){
                 if(!fragment.isServerRun){
                     fragment.isServerRun = true;
                     fragment.switchToSuccess();
                 }
-                removeMessages(2);
-                sendEmptyMessageDelayed(2,2000);
+                removeMessages(MSG_CLIENT_DISCONNECTED);
+                sendEmptyMessageDelayed(MSG_CLIENT_DISCONNECTED,2000);
             }
-            if (fragment != null && msg.what == 2 && fragment.isServerRun){
+            if (fragment != null && msg.what == MSG_CLIENT_DISCONNECTED && fragment.isServerRun){
                 fragment.isServerRun = false;
                 fragment.switchToFail();
+            }
+            if(fragment != null && msg.what == MSG_EXECUTE_FINISHED){
+                fragment.showResult();
             }
         }
     }
@@ -122,7 +143,7 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
     protected void init() {
         client = new Client(message -> {
             if(Client.ALIVE.equals(message)){
-                handler.sendEmptyMessage(1);
+                handler.sendEmptyMessage(MSG_CLIENT_CONNECTED);
             }
         });
         new HeartThread().start();
@@ -176,6 +197,20 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         } else {
             makeDir();
         }
+        taskResultContentObserver = new TaskResultContentObserver(handler);
+        mContext.getContentResolver().registerContentObserver(Uri.parse(URI_EXECUTE_RESULT), false, taskResultContentObserver);
+    }
+
+    private void showResult(){
+        Logger.d("showResult");
+        App.getContext().startActivity(new Intent(App.getContext(), MainActivity.class));
+        AppDatabase.getTaskDatabase().taskDao().getNewExecuteResult().observe(this, executeResultData -> {
+            if(executeResultData != null){
+                String content = "任务[" + executeResultData.getTaskName() + "] 执行" + (executeResultData.isSuccess() ? "成功" : "失败") + ", 时间是" + executeResultData.getEndTime();
+                ToastUtil.shortToast(content);
+                Logger.d(content);
+            }
+        });
     }
 
     private void showNoStoragePermissions(){
@@ -296,6 +331,7 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         super.onDestroyView();
         run = false;
         client.close();
+        mContext.getContentResolver().unregisterContentObserver(taskResultContentObserver);
     }
 
     class HeartThread extends Thread{
@@ -309,6 +345,23 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
                 }
                 client.send(Client.HEART_BEAT);
             }
+        }
+    }
+
+    public class TaskResultContentObserver extends ContentObserver{
+
+        MyHandler myHandler;
+
+        private TaskResultContentObserver(MyHandler handler) {
+            super(handler);
+            this.myHandler = handler;
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            myHandler.sendEmptyMessage(MSG_EXECUTE_FINISHED);
+            Logger.d(uri);
         }
     }
 }
