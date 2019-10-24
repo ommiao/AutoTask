@@ -2,7 +2,6 @@ package cn.ommiao.autotask.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.net.Uri;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -32,12 +30,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import cn.ommiao.autotask.R;
-import cn.ommiao.autotask.core.App;
 import cn.ommiao.autotask.databinding.FragmentTaskListBinding;
-import cn.ommiao.autotask.entity.ExecuteResultData;
 import cn.ommiao.autotask.entity.TaskData;
 import cn.ommiao.autotask.task.Client;
-import cn.ommiao.autotask.ui.MainActivity;
 import cn.ommiao.autotask.ui.adapter.TaskListAdapter;
 import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.common.CustomDialogFragment;
@@ -203,7 +198,6 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
 
     private void showResult(){
         Logger.d("showResult");
-        App.getContext().startActivity(new Intent(App.getContext(), MainActivity.class));
         AppDatabase.getTaskDatabase().taskDao().getNewExecuteResult().observe(this, executeResultData -> {
             if(executeResultData != null){
                 String content = "任务[" + executeResultData.getTaskName() + "] 执行" + (executeResultData.isSuccess() ? "成功" : "失败") + ", 时间是" + executeResultData.getEndTime();
