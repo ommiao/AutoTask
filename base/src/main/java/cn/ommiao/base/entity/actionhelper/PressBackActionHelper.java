@@ -2,11 +2,16 @@ package cn.ommiao.base.entity.actionhelper;
 
 import androidx.test.uiautomator.UiDevice;
 
-public class PressBackActionHelper extends BaseGlobalActionHelper {
+public class PressBackActionHelper extends BaseInjectEventActionHelper {
 
     @Override
-    public void performGlobalAction(UiDevice uiDevice){
-        uiDevice.pressBack();
+    protected boolean injectEvent(UiDevice uiDevice) {
+        return uiDevice.pressBack();
+    }
+
+    @Override
+    protected String getExceptionMessage() {
+        return "点击Back失败";
     }
 
 }

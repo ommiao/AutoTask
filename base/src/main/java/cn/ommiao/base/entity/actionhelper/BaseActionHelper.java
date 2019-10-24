@@ -8,6 +8,7 @@ import androidx.test.uiautomator.UiObjectNotFoundException;
 import java.io.IOException;
 
 import cn.ommiao.base.entity.order.Order;
+import cn.ommiao.base.exception.AbstractGlobalActionException;
 
 public abstract class BaseActionHelper {
 
@@ -27,7 +28,7 @@ public abstract class BaseActionHelper {
         return GLOBAL == getActionType();
     }
 
-    public abstract void performGlobalAction(UiDevice uiDevice) throws IOException, SecurityException;
+    public abstract boolean performGlobalAction(UiDevice uiDevice) throws IOException, AbstractGlobalActionException;
 
     public abstract void performWidgetAction(UiObject uiObject, UiObject2 uiObject2) throws UiObjectNotFoundException;
 

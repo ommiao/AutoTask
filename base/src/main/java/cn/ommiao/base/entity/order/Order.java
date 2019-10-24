@@ -1,5 +1,6 @@
 package cn.ommiao.base.entity.order;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import cn.ommiao.base.entity.JavaBean;
@@ -7,6 +8,8 @@ import cn.ommiao.base.entity.JavaBean;
 public class Order extends JavaBean {
 
     public static final int INFINITE = 0;
+
+    public String orderId;
 
     public Action action;
 
@@ -16,16 +19,16 @@ public class Order extends JavaBean {
 
     public UiInfo uiInfo = new UiInfo();
 
-    public NotFoundEvent notFoundEvent;
+    public ExceptionEvent exceptionEvent;
 
     public Order alternate;
 
     public long timeout;
 
-    public HashMap<ExecuteParam, String> executeParams = new HashMap<>();
+    public ExecuteParam executeParam = new ExecuteParam();
 
-    public String getParamValue(ExecuteParam param){
-        return executeParams.get(param);
-    }
+    public ExceptionParam exceptionParam = new ExceptionParam();
+
+    public ArrayList<UserParam> userParams = new ArrayList<>();
 
 }

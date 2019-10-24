@@ -6,11 +6,11 @@
         {
           "action": "LAUNCH_APP",
           "delay": 0,
-          "executeParams": {
+          "executeParam": {
             "TARGET_PACKAGE": "com.eg.android.AlipayGphone",
             "START_ACTIVITY": "com.eg.android.AlipayGphone.AlipayLogin"
           },
-          "notFoundEvent": "ERROR",
+          "exceptionEvent": "ERROR",
           "repeatTimes": 1,
           "timeout": 0,
           "uiInfo": {
@@ -20,8 +20,8 @@
         {
           "action": "CLICK_WIDGET",
           "delay": 500,
-          "executeParams": {},
-          "notFoundEvent": "ERROR",
+          "executeParam": {},
+          "exceptionEvent": "ERROR",
           "repeatTimes": 1,
           "timeout": 0,
           "uiInfo": {
@@ -33,8 +33,8 @@
         {
           "action": "CLICK_WIDGET",
           "delay": 1000,
-          "executeParams": {},
-          "notFoundEvent": "ERROR",
+          "executeParam": {},
+          "exceptionEvent": "ERROR",
           "repeatTimes": 1,
           "timeout": 0,
           "uiInfo": {
@@ -46,8 +46,8 @@
         {
           "action": "CLICK_WIDGET",
           "delay": 100,
-          "executeParams": {},
-          "notFoundEvent": "ERROR",
+          "executeParam": {},
+          "exceptionEvent": "ERROR",
           "repeatTimes": 0,
           "timeout": 2000,
           "uiInfo": {
@@ -59,8 +59,8 @@
         {
           "action": "PRESS_BACK",
           "delay": 0,
-          "executeParams": {},
-          "notFoundEvent": "ERROR",
+          "executeParam": {},
+          "exceptionEvent": "ERROR",
           "repeatTimes": 3,
           "timeout": 0,
           "uiInfo": {

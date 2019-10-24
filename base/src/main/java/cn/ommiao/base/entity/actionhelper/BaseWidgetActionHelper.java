@@ -12,7 +12,7 @@ public abstract class BaseWidgetActionHelper extends BaseActionHelper {
     }
 
     @Override
-    public void performGlobalAction(UiDevice uiDevice) {
-
+    public boolean performGlobalAction(UiDevice uiDevice) {
+        return false;
     }
 }

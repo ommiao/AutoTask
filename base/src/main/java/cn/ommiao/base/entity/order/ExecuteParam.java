@@ -1,10 +1,17 @@
 package cn.ommiao.base.entity.order;
 
-public enum ExecuteParam {
+public class ExecuteParam {
 
-    POSITION,
-    TARGET_PACKAGE,
-    START_ACTIVITY,
-    DATA
+    public Point POSITION;
+
+    public String TARGET_PACKAGE;
+
+    public String START_ACTIVITY;
+
+    public String INPUT_DATA;
+
+    public class Point{
+        public int x, y;
+    }
 
 }

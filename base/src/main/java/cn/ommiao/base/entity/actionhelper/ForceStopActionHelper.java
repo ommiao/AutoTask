@@ -1,16 +1,24 @@
 package cn.ommiao.base.entity.actionhelper;
 
-import androidx.test.uiautomator.UiDevice;
+public class ForceStopActionHelper extends BaseShellCommandActionHelper {
 
-import java.io.IOException;
-
-import cn.ommiao.base.entity.order.ExecuteParam;
-
-public class ForceStopActionHelper extends BaseGlobalActionHelper {
+    private String targetPackage;
 
     @Override
-    public void performGlobalAction(UiDevice uiDevice) throws IOException {
-        uiDevice.executeShellCommand("am force-stop " + order.getParamValue(ExecuteParam.TARGET_PACKAGE));
+    protected String getShellCommand() {
+        targetPackage = order.executeParam.TARGET_PACKAGE;
+        return "am force-stop " + targetPackage;
+    }
+
+
+    @Override
+    protected String getExceptionMessage() {
+        return "停止运行" + targetPackage + "失败";
+    }
+
+    @Override
+    protected boolean isSuccess(String result) {
+        return true;
     }
 
 }

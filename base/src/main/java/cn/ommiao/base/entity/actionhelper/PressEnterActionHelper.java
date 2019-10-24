@@ -2,16 +2,16 @@ package cn.ommiao.base.entity.actionhelper;
 
 import androidx.test.uiautomator.UiDevice;
 
-public class PressHomeActionHelper extends BaseInjectEventActionHelper {
+public class PressEnterActionHelper extends BaseInjectEventActionHelper {
 
     @Override
     protected boolean injectEvent(UiDevice uiDevice) {
-        return uiDevice.pressHome();
+        return uiDevice.pressEnter();
     }
 
     @Override
     protected String getExceptionMessage() {
-        return "点击Home失败";
+        return "点击Enter失败";
     }
 
 }
