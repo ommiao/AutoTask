@@ -3,8 +3,10 @@ package cn.ommiao.autotask.entity;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import cn.ommiao.base.entity.JavaBean;
+
 @Entity(primaryKeys = {"taskId", "startTime"})
-public class ExecuteResultData {
+public class ExecuteResultData extends JavaBean {
 
     @NonNull
     private String taskId = "ommiao";

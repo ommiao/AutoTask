@@ -2,6 +2,7 @@ package cn.ommiao.autotask.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.net.Uri;
@@ -30,9 +31,11 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import cn.ommiao.autotask.R;
+import cn.ommiao.autotask.core.App;
 import cn.ommiao.autotask.databinding.FragmentTaskListBinding;
 import cn.ommiao.autotask.entity.TaskData;
 import cn.ommiao.autotask.task.Client;
+import cn.ommiao.autotask.ui.MainActivity;
 import cn.ommiao.autotask.ui.adapter.TaskListAdapter;
 import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.common.CustomDialogFragment;
@@ -53,7 +56,7 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
 
     private static final int MSG_CLIENT_DISCONNECTED = 2;
 
-    private static final int MSG_EXECUTE_FINISHED = 0;
+    private static final int MSG_EXECUTE_FINISHED = 3;
 
     private ArrayList<Task> tasks = new ArrayList<>();
 
@@ -72,6 +75,8 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
     private MyHandler handler = new MyHandler(this);
 
     private TaskResultContentObserver taskResultContentObserver;
+
+    private String lastExecuteResultId;
 
     @Override
     public void onTaskSelected(String taskPath) {
@@ -193,16 +198,21 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
             makeDir();
         }
         taskResultContentObserver = new TaskResultContentObserver(handler);
-        mContext.getContentResolver().registerContentObserver(Uri.parse(URI_EXECUTE_RESULT), false, taskResultContentObserver);
+        mContext.getContentResolver().registerContentObserver(Uri.parse(URI_EXECUTE_RESULT), true, taskResultContentObserver);
     }
 
     private void showResult(){
         Logger.d("showResult");
+        Intent intent = new Intent(App.getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        App.getContext().startActivity(intent);
         AppDatabase.getTaskDatabase().taskDao().getNewExecuteResult().observe(this, executeResultData -> {
-            if(executeResultData != null){
+            if(executeResultData != null && !executeResultData.getTaskId().equals(lastExecuteResultId)){
+                lastExecuteResultId = executeResultData.getTaskId();
                 String content = "任务[" + executeResultData.getTaskName() + "] 执行" + (executeResultData.isSuccess() ? "成功" : "失败") + ", 时间是" + executeResultData.getEndTime();
                 ToastUtil.shortToast(content);
                 Logger.d(content);
+                Logger.d(executeResultData.toJson());
             }
         });
     }
@@ -352,10 +362,10 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
         }
 
         @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            super.onChange(selfChange, uri);
+        public void onChange(boolean selfChange) {
             myHandler.sendEmptyMessage(MSG_EXECUTE_FINISHED);
-            Logger.d(uri);
+            Logger.d("TaskResultContentObserver onChange(boolean selfChange)");
         }
+
     }
 }
