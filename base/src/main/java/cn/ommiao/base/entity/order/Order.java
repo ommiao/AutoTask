@@ -18,7 +18,7 @@ public class Order extends JavaBean {
 
     public UiInfo uiInfo = new UiInfo();
 
-    public ExceptionEvent exceptionEvent;
+    public ExceptionEvent exceptionEvent = ExceptionEvent.ERROR;
 
     public Order alternate;
 
