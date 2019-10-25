@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import cn.ommiao.base.entity.order.Order;
 import cn.ommiao.base.exception.AbstractGlobalActionException;
+import cn.ommiao.base.exception.AbstractWidgetActionException;
 
 public abstract class BaseActionHelper {
 
@@ -30,6 +31,6 @@ public abstract class BaseActionHelper {
 
     public abstract boolean performGlobalAction(UiDevice uiDevice) throws IOException, AbstractGlobalActionException;
 
-    public abstract void performWidgetAction(UiObject uiObject, UiObject2 uiObject2) throws UiObjectNotFoundException;
+    public abstract void performWidgetAction(UiObject uiObject, UiObject2 uiObject2) throws UiObjectNotFoundException, AbstractWidgetActionException;
 
 }

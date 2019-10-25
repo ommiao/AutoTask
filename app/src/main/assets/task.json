@@ -12,7 +12,6 @@
           },
           "exceptionEvent": "ERROR",
           "repeatTimes": 1,
-          "timeout": 0,
           "uiInfo": {
             "findRules": {}
           }
@@ -23,7 +22,6 @@
           "executeParam": {},
           "exceptionEvent": "ERROR",
           "repeatTimes": 1,
-          "timeout": 0,
           "uiInfo": {
             "findRules": {
               "ID": "com.alipay.android.phone.openplatform:id/more_app_text"
@@ -36,7 +34,6 @@
           "executeParam": {},
           "exceptionEvent": "ERROR",
           "repeatTimes": 1,
-          "timeout": 0,
           "uiInfo": {
             "findRules": {
               "TEXT": "蚂蚁森林"
@@ -49,7 +46,6 @@
           "executeParam": {},
           "exceptionEvent": "ERROR",
           "repeatTimes": 0,
-          "timeout": 2000,
           "uiInfo": {
             "findRules": {
               "TEXT_CONTAINS": "收集能量"
@@ -62,7 +58,6 @@
           "executeParam": {},
           "exceptionEvent": "ERROR",
           "repeatTimes": 3,
-          "timeout": 0,
           "uiInfo": {
             "findRules": {}
           }

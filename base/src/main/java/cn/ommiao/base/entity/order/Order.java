@@ -1,7 +1,6 @@
 package cn.ommiao.base.entity.order;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import cn.ommiao.base.entity.JavaBean;
 
@@ -22,8 +21,6 @@ public class Order extends JavaBean {
     public ExceptionEvent exceptionEvent;
 
     public Order alternate;
-
-    public long timeout;
 
     public ExecuteParam executeParam = new ExecuteParam();
 
