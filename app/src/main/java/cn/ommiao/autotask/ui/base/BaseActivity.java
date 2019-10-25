@@ -19,13 +19,14 @@ public abstract class BaseActivity<B extends ViewDataBinding> extends AppCompatA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, getLayoutId());
-        init();
-        initViews(savedInstanceState);
-        initData();
+        if(init()){
+            initViews(savedInstanceState);
+            initData();
+        }
     }
 
-    protected void init(){
-
+    protected boolean init(){
+        return true;
     }
 
     protected abstract void initViews(Bundle savedInstanceState);

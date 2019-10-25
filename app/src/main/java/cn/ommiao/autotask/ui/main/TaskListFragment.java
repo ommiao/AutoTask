@@ -2,7 +2,6 @@ package cn.ommiao.autotask.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.net.Uri;
@@ -31,11 +30,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import cn.ommiao.autotask.R;
-import cn.ommiao.autotask.core.App;
 import cn.ommiao.autotask.databinding.FragmentTaskListBinding;
 import cn.ommiao.autotask.entity.TaskData;
 import cn.ommiao.autotask.task.Client;
-import cn.ommiao.autotask.ui.MainActivity;
 import cn.ommiao.autotask.ui.adapter.TaskListAdapter;
 import cn.ommiao.autotask.ui.base.BaseFragment;
 import cn.ommiao.autotask.ui.common.CustomDialogFragment;
@@ -76,7 +73,7 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
 
     private TaskResultContentObserver taskResultContentObserver;
 
-    private String lastExecuteResultId;
+    private String lastExecuteResultEndTime;
 
     @Override
     public void onTaskSelected(String taskPath) {
@@ -203,12 +200,9 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
 
     private void showResult(){
         Logger.d("showResult");
-        Intent intent = new Intent(App.getContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        App.getContext().startActivity(intent);
         AppDatabase.getTaskDatabase().taskDao().getNewExecuteResult().observe(this, executeResultData -> {
-            if(executeResultData != null && !executeResultData.getTaskId().equals(lastExecuteResultId)){
-                lastExecuteResultId = executeResultData.getTaskId();
+            if(executeResultData != null && !executeResultData.getEndTime().equals(lastExecuteResultEndTime)){
+                lastExecuteResultEndTime = executeResultData.getEndTime();
                 String content = "任务[" + executeResultData.getTaskName() + "] 执行" + (executeResultData.isSuccess() ? "成功" : "失败") + ", 时间是" + executeResultData.getEndTime();
                 ToastUtil.shortToast(content);
                 Logger.d(content);

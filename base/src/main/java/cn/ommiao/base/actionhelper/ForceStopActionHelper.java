@@ -1,4 +1,4 @@
-package cn.ommiao.base.entity.actionhelper;
+package cn.ommiao.base.actionhelper;
 
 public class ForceStopActionHelper extends BaseShellCommandActionHelper {
 

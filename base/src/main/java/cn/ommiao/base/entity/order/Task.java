@@ -10,5 +10,6 @@ public class Task extends JavaBean {
     public String taskName, taskDescription;
     public ArrayList<Group> groups;
     public String taskVersion;
+    public boolean startMain = true;
 
 }

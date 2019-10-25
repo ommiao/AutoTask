@@ -11,6 +11,14 @@ import cn.ommiao.autotask.ui.main.TaskListFragment;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
+    public static boolean ALREADY_LAUNCHED = false;
+
+    @Override
+    protected boolean init() {
+        ALREADY_LAUNCHED = true;
+        return true;
+    }
+
     @Override
     protected void initViews(Bundle savedInstanceState) {
         ImmersionBar.with(this).transparentStatusBar().statusBarDarkFont(true).init();
@@ -25,6 +33,5 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     protected int getLayoutId() {
         return R.layout.activity_main;
     }
-
 
 }

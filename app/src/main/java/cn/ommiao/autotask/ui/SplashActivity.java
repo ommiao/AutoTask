@@ -10,21 +10,31 @@ import cn.ommiao.autotask.databinding.ActivitySplashBinding;
 import cn.ommiao.autotask.ui.base.BaseActivity;
 import cn.ommiao.base.util.FileUtil;
 
+import static cn.ommiao.autotask.ui.MainActivity.ALREADY_LAUNCHED;
+
 public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
     @Override
-    protected void init() {
+    protected boolean init() {
+        if(ALREADY_LAUNCHED){
+            startMain();
+            return false;
+        }
         copyFiles("autotaskserver.jar");
         copyFiles("autotask.bash");
+        return true;
     }
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        mBinding.getRoot().postDelayed(() -> {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }, 1000);
+        mBinding.getRoot().postDelayed(this::startMain, 1000);
     }
+
+    private void startMain() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
+
 
     @Override
     protected int getLayoutId() {

@@ -1,15 +1,15 @@
 package cn.ommiao.base.entity.order;
 
-import cn.ommiao.base.entity.actionhelper.AmStartActionHelper;
-import cn.ommiao.base.entity.actionhelper.BaseActionHelper;
-import cn.ommiao.base.entity.actionhelper.ClickPositionActionHelper;
-import cn.ommiao.base.entity.actionhelper.ClickWidgetActionHelper;
-import cn.ommiao.base.entity.actionhelper.ForceStopActionHelper;
-import cn.ommiao.base.entity.actionhelper.InputDataActionHelper;
-import cn.ommiao.base.entity.actionhelper.PressBackActionHelper;
-import cn.ommiao.base.entity.actionhelper.PressEnterActionHelper;
-import cn.ommiao.base.entity.actionhelper.PressHomeActionHelper;
-import cn.ommiao.base.entity.actionhelper.PressMenuActionHelper;
+import cn.ommiao.base.actionhelper.AmStartActionHelper;
+import cn.ommiao.base.actionhelper.BaseActionHelper;
+import cn.ommiao.base.actionhelper.ClickPositionActionHelper;
+import cn.ommiao.base.actionhelper.ClickWidgetActionHelper;
+import cn.ommiao.base.actionhelper.ForceStopActionHelper;
+import cn.ommiao.base.actionhelper.InputDataActionHelper;
+import cn.ommiao.base.actionhelper.PressBackActionHelper;
+import cn.ommiao.base.actionhelper.PressEnterActionHelper;
+import cn.ommiao.base.actionhelper.PressHomeActionHelper;
+import cn.ommiao.base.actionhelper.PressMenuActionHelper;
 
 public enum Action {
 

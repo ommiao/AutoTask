@@ -1,8 +1,6 @@
-package cn.ommiao.base.entity.actionhelper;
+package cn.ommiao.base.actionhelper;
 
 import androidx.test.uiautomator.UiDevice;
-import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObject2;
 
 public abstract class BaseWidgetActionHelper extends BaseActionHelper {
 
