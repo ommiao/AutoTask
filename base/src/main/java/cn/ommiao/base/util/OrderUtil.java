@@ -11,11 +11,14 @@ import java.nio.charset.StandardCharsets;
 public class OrderUtil {
 
     public static String readOrders(Context context){
-        InputStream inputStream = null;
+        return readOrders(context, "task.json");
+    }
+
+    public static String readOrders(Context context, String assetName){
+        InputStream inputStream;
         try {
-            inputStream = context.getAssets().open("task.json");
-            String str = getString(inputStream);
-            return str;
+            inputStream = context.getAssets().open(assetName);
+            return getString(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }

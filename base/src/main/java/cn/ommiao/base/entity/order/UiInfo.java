@@ -6,7 +6,7 @@ import cn.ommiao.base.entity.JavaBean;
 
 public class UiInfo extends JavaBean {
 
-    public UiInfo parent;
+    public UiInfoParent parent;
 
     public HashMap<FindRule, String> findRules = new HashMap<>();
 

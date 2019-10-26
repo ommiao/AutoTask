@@ -1,6 +1,8 @@
 package cn.ommiao.base.findrulehelper;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.UiSelector;
 
@@ -19,7 +21,7 @@ public class TextContainsHelper extends TextHelper {
     }
 
     @Override
-    public BySelector bindBySelector(@NonNull BySelector bySelector, String value) {
-        return bySelector.textContains(value);
+    public BySelector bindBySelector(@Nullable BySelector bySelector, String value) {
+        return bySelector == null ? By.textContains(value) : bySelector.textContains(value);
     }
 }

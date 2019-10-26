@@ -1,6 +1,8 @@
 package cn.ommiao.base.findrulehelper;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.UiSelector;
 
@@ -19,8 +21,8 @@ public class DescriptionHelper extends BaseFindRuleHelper {
     }
 
     @Override
-    public BySelector bindBySelector(@NonNull BySelector bySelector, String value) {
-        return bySelector.desc(value);
+    public BySelector bindBySelector(@Nullable BySelector bySelector, String value) {
+        return bySelector == null ? By.desc(value) : bySelector.desc(value);
     }
 
 }

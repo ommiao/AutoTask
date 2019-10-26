@@ -1,6 +1,7 @@
 package cn.ommiao.base.entity.order;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.UiSelector;
 
@@ -49,7 +50,7 @@ public enum FindRule {
         return findRuleHelper.bindUiSelector(uiSelector, value);
     }
 
-    public BySelector bindSelector(@NonNull BySelector bySelector, String value){
+    public BySelector bindSelector(@Nullable BySelector bySelector, String value){
         return findRuleHelper.bindBySelector(bySelector, value);
     }
 

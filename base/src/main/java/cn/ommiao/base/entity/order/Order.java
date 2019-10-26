@@ -8,8 +8,6 @@ public class Order extends JavaBean {
 
     public static final int INFINITE = 0;
 
-    public String orderId;
-
     public Action action;
 
     public int repeatTimes;

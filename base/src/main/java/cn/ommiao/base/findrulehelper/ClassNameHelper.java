@@ -1,6 +1,8 @@
 package cn.ommiao.base.findrulehelper;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.UiSelector;
 
@@ -19,8 +21,8 @@ public class ClassNameHelper extends BaseFindRuleHelper {
     }
 
     @Override
-    public BySelector bindBySelector(@NonNull BySelector bySelector, String value) {
-        return bySelector.clazz(value);
+    public BySelector bindBySelector(@Nullable BySelector bySelector, String value) {
+        return bySelector == null ? By.clazz(value) : bySelector.clazz(value);
     }
 
 }
