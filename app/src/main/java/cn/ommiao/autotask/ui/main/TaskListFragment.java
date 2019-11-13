@@ -183,7 +183,7 @@ public class TaskListFragment extends BaseFragment<FragmentTaskListBinding, Main
             new CustomDialogFragment().content("为了导入并存取任务数据，需要请求读写存储权限，本应用仅读写根目录/AutoTask文件夹。")
                     .rightBtn("确定")
                     .onRightClick(() -> {
-                        AndPermission.with(mContext).runtime().permission(Permission.Group.STORAGE).onGranted(permissions -> {
+                        AndPermission.with(mContext).runtime().permission(Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE).onGranted(permissions -> {
                             if(permissions.size() == 2){
                                 makeDir();
                             }
